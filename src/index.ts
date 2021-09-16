@@ -1,1 +1,1 @@
-export { create as kontexture } from './kontexture'
+export { create as kont } from './kont'
