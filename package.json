@@ -14,13 +14,6 @@
       "import": "./dist-esm/index.js"
     }
   },
-  "typesVersions": {
-    "*": {
-      "*": [
-        "./dist-esm/*"
-      ]
-    }
-  },
   "main": "./dist-cjs/index.js",
   "module": "./dist-esm/index.js",
   "scripts": {
