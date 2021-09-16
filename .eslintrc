@@ -1,0 +1,26 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": ["tsconfig.json"]
+  },
+  "plugins": ["@typescript-eslint", "only-warn"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "prettier"
+  ],
+  "overrides": [],
+  "rules": {
+    // TypeScript makes these safe & effective
+    "no-case-declarations": "off",
+    // This rule marks nameof as a warning which is annoying if
+    // using nameof heavily. Alternative is to keep this enabled and
+    // just disable ESLint around usage of nameof in codebase.
+    "@typescript-eslint/no-unsafe-call": "off",
+    // Same approach used by TypeScript noUnusedLocals
+    "@typescript-eslint/no-unused-vars": ["warn", { "varsIgnorePattern": "^_", "argsIgnorePattern": "^_" }]
+  }
+}

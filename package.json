@@ -1,0 +1,79 @@
+{
+  "name": "kont",
+  "version": "0.0.0-dripip",
+  "repository": "git@github.com:jasonkuhrt/kont.git",
+  "author": "Jason Kuhrt",
+  "license": "MIT",
+  "files": [
+    "dist-cjs",
+    "dist-esm"
+  ],
+  "exports": {
+    ".": {
+      "require": "./dist-cjs/index.js",
+      "import": "./dist-esm/index.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist-esm/*"
+      ]
+    }
+  },
+  "main": "./dist-cjs/index.js",
+  "module": "./dist-esm/index.js",
+  "scripts": {
+    "format": "yarn format:prettier && yarn format:imports",
+    "format:prettier": "prettier --write .",
+    "format:imports": "format-imports src && format-imports tests",
+    "format:check": "yarn -s format:check:imports && yarn -s format:check:prettier",
+    "format:check:imports": "format-imports --check src tests",
+    "format:check:prettier": "prettier --check .",
+    "lint": "eslint . --ext .ts,.tsx --fix",
+    "lint:check": "eslint . --ext .ts,.tsx --max-warnings 0",
+    "dev": "yarn -s clean && ttsc --build --watch tsconfig.cjs.json tsconfig.esm.json",
+    "build": "yarn -s clean && yarn build:cjs && yarn build:esm",
+    "build:cjs": "ttsc --project tsconfig.cjs.json",
+    "build:esm": "ttsc --project tsconfig.esm.json",
+    "test": "jest",
+    "clean": "rm -rf dist-cjs dist-esm node_modules/.cache",
+    "release:pr": "dripip pr",
+    "release:canary": "dripip preview",
+    "release:stable": "dripip stable",
+    "prepublishOnly": "yarn -s build"
+  },
+  "dependencies": {
+    "tslib": "^2.3.1"
+  },
+  "devDependencies": {
+    "@homer0/prettier-plugin-jsdoc": "4.0.5",
+    "@prisma-labs/prettier-config": "0.1.0",
+    "@types/jest": "27.0.1",
+    "@types/node": "16.9.1",
+    "@types/ts-nameof": "4.2.1",
+    "@typescript-eslint/eslint-plugin": "4.31.0",
+    "@typescript-eslint/parser": "4.31.0",
+    "dripip": "0.10.0",
+    "eslint": "7.32.0",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-plugin-only-warn": "1.0.3",
+    "format-imports": "2.4.1",
+    "jest": "27.1.1",
+    "jest-watch-select-projects": "2.0.0",
+    "jest-watch-suspend": "1.1.2",
+    "jest-watch-typeahead": "0.6.4",
+    "prettier": "2.4.0",
+    "ts-jest": "27.0.5",
+    "ts-nameof": "5.0.0",
+    "ts-node": "10.2.1",
+    "ttypescript": "1.5.12",
+    "typescript": "4.4.3",
+    "typescript-snapshots-plugin": "1.7.0",
+    "typescript-transform-paths": "3.3.1"
+  },
+  "importSorter": {
+    "emptyLinesBetweenGroups": 0,
+    "wrappingStyle": "prettier"
+  }
+}
