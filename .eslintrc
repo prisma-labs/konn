@@ -21,6 +21,11 @@
     // just disable ESLint around usage of nameof in codebase.
     "@typescript-eslint/no-unsafe-call": "off",
     // Same approach used by TypeScript noUnusedLocals
-    "@typescript-eslint/no-unused-vars": ["warn", { "varsIgnorePattern": "^_", "argsIgnorePattern": "^_" }]
+    "@typescript-eslint/no-unused-vars": ["warn", { "varsIgnorePattern": "^_", "argsIgnorePattern": "^_" }],
+    // TS Namespaces are sometimes useful, just know:
+    // - They do not seem to be being evolved by TS team anymore
+    // - Do not work with tree-shaking
+    // - Can lead to subtle autocomplete issues
+    "@typescript-eslint/no-namespace": "off"
   }
 }
