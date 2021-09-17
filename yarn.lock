@@ -2622,7 +2622,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"execa@npm:^5.0.0":
+"execa@npm:^5.0.0, execa@npm:^5.1.1":
   version: 5.1.1
   resolution: "execa@npm:5.1.1"
   dependencies:
@@ -2872,6 +2872,16 @@ __metadata:
     minimatch: ^3.0.2
     rimraf: ^2.6.3
   checksum: 63a0e980a8beeed35b114d4ee98de1bfe23a5d39115f154402327d2e38d5c159608be11ed38baf1e50269831f08c909f0929ddcdb76bf1e9b5d612f996163deb
+  languageName: node
+  linkType: hard
+
+"fs-jetpack@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "fs-jetpack@npm:4.1.1"
+  dependencies:
+    minimatch: ^3.0.2
+    rimraf: ^2.6.3
+  checksum: f30045b4604aeb449fd0dc0856671cb8c2bcf5ecc46239f5c03e3f493f47160e94e93352ab4676a01fa0ba75d20302d0bed4d78d62c10efd6bae396181271938
   languageName: node
   linkType: hard
 
@@ -4203,7 +4213,9 @@ fsevents@^2.3.2:
     eslint: 7.32.0
     eslint-config-prettier: 8.3.0
     eslint-plugin-only-warn: 1.0.3
+    execa: ^5.1.1
     format-imports: 2.4.1
+    fs-jetpack: ^4.1.1
     jest: 27.1.1
     jest-watch-select-projects: 2.0.0
     jest-watch-suspend: 1.1.2

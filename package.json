@@ -12,6 +12,20 @@
     ".": {
       "require": "./dist-cjs/index.js",
       "import": "./dist-esm/index.js"
+    },
+    "./providers": {
+      "require": "./dist-cjs/providers.js",
+      "import": "./dist-esm/providers.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist-cjs/entrypoints/main.d.ts"
+      ],
+      "providers": [
+        "./dist-cjs/entrypoints/providers.d.ts"
+      ]
     }
   },
   "main": "./dist-cjs/index.js",
@@ -38,6 +52,8 @@
   },
   "dependencies": {
     "@jsdevtools/ono": "^7.1.3",
+    "execa": "^5.1.1",
+    "fs-jetpack": "^4.1.1",
     "lodash": "^4.17.21",
     "tslib": "^2.3.1"
   },
