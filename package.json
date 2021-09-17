@@ -6,7 +6,9 @@
   "license": "MIT",
   "files": [
     "dist-cjs",
-    "dist-esm"
+    "dist-esm",
+    "providers.d.ts",
+    "providers.js"
   ],
   "exports": {
     ".": {
@@ -40,11 +42,11 @@
     "lint": "eslint . --ext .ts,.tsx --fix",
     "lint:check": "eslint . --ext .ts,.tsx --max-warnings 0",
     "dev": "yarn clean && tsc --build --watch tsconfig.cjs.json tsconfig.esm.json",
-    "build": "yarn clean && yarn build:cjs && yarn build:esm",
+    "build": "yarn clean && yarn build:cjs && yarn build:esm && yarn ts-node scripts/simulatePackageExports",
     "build:cjs": "ttsc --project tsconfig.cjs.json",
     "build:esm": "ttsc --project tsconfig.esm.json",
     "test": "jest",
-    "clean": "rm -rf dist-cjs dist-esm node_modules/.cache",
+    "clean": "rm -rf dist-cjs dist-esm node_modules/.cache providers.d.ts providers.js",
     "release:pr": "dripip pr",
     "release:canary": "dripip preview",
     "release:stable": "dripip stable",
