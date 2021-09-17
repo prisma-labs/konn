@@ -1,7 +1,6 @@
 import * as Fs from 'fs-jetpack'
 import { FSJetpack } from 'fs-jetpack/types'
-import { createDynamicProvider, Nothing } from 'src'
-import { DynamicProvider } from 'src/kont'
+import { createDynamicProvider, DynamicProvider, Nothing } from '../../kont'
 
 export type Params = {
   path: string
