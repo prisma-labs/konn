@@ -2792,6 +2792,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"floggy@npm:^0.2.3":
+  version: 0.2.3
+  resolution: "floggy@npm:0.2.3"
+  dependencies:
+    chalk: ^4.1.0
+    fp-ts: ^2.9.5
+    lodash: ^4.17.21
+    strip-ansi: ^6.0.0
+  checksum: bf888905464dde2816381a8076c81d37314b55269fb4c7a43a5326684410b6a5ef2dfbb2500c872413f58a6229fe062b5d258043ed8e040565bde5360a5b6b3c
+  languageName: node
+  linkType: hard
+
 "forever-agent@npm:~0.6.1":
   version: 0.6.1
   resolution: "forever-agent@npm:0.6.1"
@@ -2839,6 +2851,13 @@ __metadata:
   bin:
     format-imports: dist/bin/main.js
   checksum: b570ce4dfb94094017ae61651a7e1d5c354afb92453b4ca52fada8d6104a014325ce0bc3c1beba95d75a64abad175f6953f7d317d59c3796ad90608a0b312572
+  languageName: node
+  linkType: hard
+
+"fp-ts@npm:^2.9.5":
+  version: 2.11.2
+  resolution: "fp-ts@npm:2.11.2"
+  checksum: 84a524ef320b9376c653ac0d65ca036a3d9db1998711db9e0f72a1d63d158590ae6d3cde850ccbea652fa615de4ff6759af49e977b7526a9ede1c736055a8f5a
   languageName: node
   linkType: hard
 
@@ -4214,6 +4233,7 @@ fsevents@^2.3.2:
     eslint-config-prettier: 8.3.0
     eslint-plugin-only-warn: 1.0.3
     execa: ^5.1.1
+    floggy: ^0.2.3
     format-imports: 2.4.1
     fs-jetpack: ^4.1.1
     jest: 27.1.1

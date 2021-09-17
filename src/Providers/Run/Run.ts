@@ -35,6 +35,7 @@ export const create = (params?: Params): DynamicProvider<Needs, Contributes> =>
     register.before((ctx) => {
       const cwd = ctx.fs?.cwd() ?? process.cwd()
       const packageManager = params?.packageManager ?? 'npm'
+
       const api: Contributes = {
         run(command, options) {
           // console.log(`${command} ...`)

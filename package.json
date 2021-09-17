@@ -55,6 +55,7 @@
   "dependencies": {
     "@jsdevtools/ono": "^7.1.3",
     "execa": "^5.1.1",
+    "floggy": "^0.2.3",
     "fs-jetpack": "^4.1.1",
     "lodash": "^4.17.21",
     "tslib": "^2.3.1"
