@@ -9,6 +9,15 @@ export type Params = {
    * @default `'npm'`
    */
   packageManager?: 'npm' | 'yarn' | 'pnpm'
+  /**
+   * Enable debug mode.
+   *
+   * When debug mode is enabled then commands will attach to the parent process stdio. This can be helpful
+   * when trying to see what a child process is doing via its emitted logs, errors, etc.
+   *
+   * @default false
+   */
+  debug?: boolean
 }
 
 export type Needs = Partial<Dir.Contributes>
@@ -35,11 +44,13 @@ export const create = (params?: Params): DynamicProvider<Needs, Contributes> =>
     register.before((ctx) => {
       const cwd = ctx.fs?.cwd() ?? process.cwd()
       const packageManager = params?.packageManager ?? 'npm'
+      const stdio = params?.debug ? 'inherit' : undefined
 
       const api: Contributes = {
         run(command, options) {
           // console.log(`${command} ...`)
           return Execa.commandSync(command, {
+            stdio,
             cwd,
             ...options,
             reject: false,
@@ -49,6 +60,7 @@ export const create = (params?: Params): DynamicProvider<Needs, Contributes> =>
           // console.log(`${command} ...`)
           return Execa.commandSync(`${packageManager} run --silent ${command}`, {
             cwd,
+            stdio,
             ...options,
             reject: false,
           })
@@ -57,6 +69,7 @@ export const create = (params?: Params): DynamicProvider<Needs, Contributes> =>
           // console.log(`${command} ...`)
           return Execa.commandSync(command, {
             cwd,
+            stdio,
             ...options,
           })
         },
@@ -64,6 +77,7 @@ export const create = (params?: Params): DynamicProvider<Needs, Contributes> =>
           // console.log(`${command} ...`)
           return Execa.commandSync(`${packageManager} run --silent ${command}`, {
             cwd,
+            stdio,
             ...options,
           })
         },
@@ -71,6 +85,7 @@ export const create = (params?: Params): DynamicProvider<Needs, Contributes> =>
           // console.log(`${command} ...`)
           return Execa.command(command, {
             cwd,
+            stdio,
             ...options,
           })
         },
