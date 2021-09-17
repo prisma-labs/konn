@@ -8,6 +8,8 @@ import { MaybePromise } from './utils'
  * Each test context provider may supply new values to the test context and integrate into Jest's before/after hooks.
  */
 export interface TestContext<C1 extends ContextBase> {
+  beforeEach<C2 extends ContextBase>(setup: Setup<C1, C2>): TestContext<MergeContextNeedsContributed<C1, C2>>
+  beforeAll<C2 extends ContextBase>(setup: Setup<C1, C2>): TestContext<MergeContextNeedsContributed<C1, C2>>
   useBeforeEach<C2 extends ContextBase>(
     provider: DynamicProvider<C1, C2>
   ): TestContext<MergeContextNeedsContributed<C1, C2>>
@@ -58,7 +60,7 @@ export type DynamicRegister<C1 extends ContextBase> = {
   after: (setdown: Setdown<C1>) => DynamicRegisterAfter<C1>
 }
 
-export type DynamicRegisterAfter<C1 extends ContextBase | unknown> = {
+export type DynamicRegisterAfter<C1 extends ContextBase> = {
   after: (setdown: Setdown<C1>) => DynamicRegisterAfter<C1>
 }
 
@@ -104,11 +106,9 @@ export type RegisterBeforeEach<C1 extends ContextBase> = {
 
 // contributor
 
-export type Setup<C1 extends ContextBase | unknown, C2 extends ContextBase> = (
-  upstreamContext: C1
-) => MaybePromise<C2>
+export type Setup<C1 extends ContextBase, C2 extends ContextBase> = (upstreamContext: C1) => MaybePromise<C2>
 
-export type Setdown<C1 extends ContextBase | unknown = ContextBase> = (context: C1) => MaybePromise<void>
+export type Setdown<C1 extends ContextBase = ContextBase> = (context: C1) => MaybePromise<void>
 
 export type ContextBase = Record<string, unknown>
 
@@ -290,6 +290,24 @@ export function create<C extends ContextBase = ContextBase>(): TestContext<C> {
 
     useBeforeEach: (dynamicProvider) => {
       runDynamicProvider('beforeEach', dynamicProvider)
+      return api as any
+    },
+
+    beforeAll: (setup) => {
+      runSetup({
+        jestHookName: 'beforeAll',
+        hookProxy: setup,
+        providerName: 'INLINE',
+      })
+      return api as any
+    },
+
+    beforeEach: (setup) => {
+      runSetup({
+        jestHookName: 'beforeEach',
+        hookProxy: setup,
+        providerName: 'INLINE',
+      })
       return api as any
     },
 
