@@ -22,13 +22,19 @@ export type Contributes = {
 }
 
 /**
- *  If upstream adds `fs` to context then is used to get the default CWD for commands.
+ * Create a Run provider.
+ *
+ * Run provider makes it easy to run child processes.
+ *
+ * It uses [Execa](https://github.com/sindresorhus/execa) under the hood.
+ *
+ * If upstream includes `Dir` provider then is used to get the default CWD for commands.
  */
-export const run = (params: Params): DynamicProvider<Needs, Contributes> =>
+export const create = (params?: Params): DynamicProvider<Needs, Contributes> =>
   createDynamicProvider<Needs, Contributes>((register) =>
     register.before((ctx) => {
       const cwd = ctx.fs?.cwd() ?? process.cwd()
-      const packageManager = params.packageManager ?? 'npm'
+      const packageManager = params?.packageManager ?? 'npm'
       const api: Contributes = {
         run(command, options) {
           // console.log(`${command} ...`)
