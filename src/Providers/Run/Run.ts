@@ -1,6 +1,7 @@
 import * as Execa from 'execa'
 import { createDynamicProvider, DynamicProvider } from '../../kont'
 import { Dir } from '../Dir'
+import { runLog } from '../Dir/runLog'
 
 export type Params = {
   /**
@@ -48,7 +49,7 @@ export const create = (params?: Params): DynamicProvider<Needs, Contributes> =>
 
       const api: Contributes = {
         run(command, options) {
-          // console.log(`${command} ...`)
+          runLog.info(`will_run`, { command })
           return Execa.commandSync(command, {
             stdio,
             cwd,
@@ -57,7 +58,7 @@ export const create = (params?: Params): DynamicProvider<Needs, Contributes> =>
           })
         },
         runPackageScript(command, options) {
-          // console.log(`${command} ...`)
+          runLog.info(`will_run`, { command })
           return Execa.commandSync(`${packageManager} run --silent ${command}`, {
             cwd,
             stdio,
@@ -66,7 +67,7 @@ export const create = (params?: Params): DynamicProvider<Needs, Contributes> =>
           })
         },
         runOrThrow(command, options) {
-          // console.log(`${command} ...`)
+          runLog.info(`will_run`, { command })
           return Execa.commandSync(command, {
             cwd,
             stdio,
@@ -74,7 +75,7 @@ export const create = (params?: Params): DynamicProvider<Needs, Contributes> =>
           })
         },
         runOrThrowPackageScript(command, options) {
-          // console.log(`${command} ...`)
+          runLog.info(`will_run`, { command })
           return Execa.commandSync(`${packageManager} run --silent ${command}`, {
             cwd,
             stdio,
@@ -82,7 +83,7 @@ export const create = (params?: Params): DynamicProvider<Needs, Contributes> =>
           })
         },
         runAsync(command, options) {
-          // console.log(`${command} ...`)
+          runLog.info(`will_run`, { command })
           return Execa.command(command, {
             cwd,
             stdio,
