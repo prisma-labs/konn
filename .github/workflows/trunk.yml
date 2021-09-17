@@ -19,9 +19,9 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: yarn
       - name: Install Dependencies
-        run: yarn --frozen-lockfile
-      - run: yarn -s build
-      - run: yarn -s test
+        run: yarn
+      - run: yarn build
+      - run: yarn test
 
   # https://github.community/t/how-can-i-test-if-secrets-are-available-in-an-action/17911/10?u=jasonkuhrt
   checkNpmTokenSet:
@@ -54,8 +54,8 @@ jobs:
           node-version: 16.x
           cache: yarn
       - name: Install Dependencies
-        run: yarn --frozen-lockfile
+        run: yarn
       - name: Release Canary
         run: |
-          yarn -s dripip preview --json > result.json
+          yarn dripip preview --json > result.json
           jq '.' < result.json
