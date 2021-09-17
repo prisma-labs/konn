@@ -1,3 +1,3 @@
-import { log } from 'floggy'
+import { kontLog } from '../../log'
 
-export const dirLog = log.child('provider').child('dir')
+export const dirLog = kontLog.child('provider').child('dir')

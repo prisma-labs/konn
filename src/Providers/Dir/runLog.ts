@@ -1,3 +1,3 @@
-import { log } from 'floggy'
+import { kontLog } from '../../log'
 
-export const runLog = log.child('provider').child('run')
+export const runLog = kontLog.child('provider').child('run')
