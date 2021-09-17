@@ -1,6 +1,6 @@
-import { merge } from 'lodash'
 /* eslint @typescript-eslint/no-unsafe-return: "off", @typescript-eslint/no-explicit-any: "off" */
 import ono from '@jsdevtools/ono'
+import { merge } from 'lodash'
 import { MaybePromise } from './utils'
 
 /**
@@ -49,19 +49,32 @@ export const createDynamicProvider = <
 export type DynamicProvider<ContextNeeded extends ContextBase, ContextContributed extends ContextBase> = {
   (register: DynamicRegister<ContextNeeded>):
     | DynamicRegister<ContextContributed>
-    | DynamicRegisterAfter<ContextContributed>
+    | DynamicRegisterAfterAfter<ContextContributed>
   providerName?: string
 }
 
 export type DynamicRegister<C1 extends ContextBase> = {
+  /**
+   * Name this provider.
+   *
+   * If not given, falls back to the function name.
+   */
+  name(name: string): DynamicRegisterAfterName<C1>
   before: <C2 extends ContextBase>(
     setup: Setup<C1, C2>
   ) => DynamicRegister<MergeContextNeedsContributed<C1, C2>>
-  after: (setdown: Setdown<C1>) => DynamicRegisterAfter<C1>
+  after: (setdown: Setdown<C1>) => DynamicRegisterAfterAfter<C1>
 }
 
-export type DynamicRegisterAfter<C1 extends ContextBase> = {
-  after: (setdown: Setdown<C1>) => DynamicRegisterAfter<C1>
+export type DynamicRegisterAfterAfter<C1 extends ContextBase> = {
+  after: (setdown: Setdown<C1>) => DynamicRegisterAfterAfter<C1>
+}
+
+export type DynamicRegisterAfterName<C1 extends ContextBase> = {
+  before: <C2 extends ContextBase>(
+    setup: Setup<C1, C2>
+  ) => DynamicRegister<MergeContextNeedsContributed<C1, C2>>
+  after: (setdown: Setdown<C1>) => DynamicRegisterAfterAfter<C1>
 }
 
 /**
@@ -204,9 +217,13 @@ export function create<C extends ContextBase = ContextBase>(): TestContext<C> {
   }
 
   const runDynamicProvider = (jestHookName: HookNames.Setup, provider: DynamicProvider<C, ContextBase>) => {
-    const providerName = getProviderName(provider)
+    let providerName = getProviderName(provider)
 
     const register: DynamicRegister<C> = {
+      name(name) {
+        providerName = name
+        return register as any
+      },
       before(hookProxy) {
         runSetup({
           providerName,
