@@ -1,6 +1,6 @@
+import { merge } from 'lodash'
 /* eslint @typescript-eslint/no-unsafe-return: "off", @typescript-eslint/no-explicit-any: "off" */
 import ono from '@jsdevtools/ono'
-import { merge } from 'lodash'
 import { MaybePromise } from './utils'
 
 /**
