@@ -6,3 +6,4 @@ dist-cjs
 dist-esm
 tests
 jest.config.ts
+providers.d.ts

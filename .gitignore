@@ -118,3 +118,7 @@ dist-cjs
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# Simulated Package Exports
+providers.d.ts
+providers.js

@@ -2622,7 +2622,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"execa@npm:^5.0.0":
+"execa@npm:^5.0.0, execa@npm:^5.1.1":
   version: 5.1.1
   resolution: "execa@npm:5.1.1"
   dependencies:
@@ -2792,6 +2792,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"floggy@npm:^0.2.3":
+  version: 0.2.3
+  resolution: "floggy@npm:0.2.3"
+  dependencies:
+    chalk: ^4.1.0
+    fp-ts: ^2.9.5
+    lodash: ^4.17.21
+    strip-ansi: ^6.0.0
+  checksum: bf888905464dde2816381a8076c81d37314b55269fb4c7a43a5326684410b6a5ef2dfbb2500c872413f58a6229fe062b5d258043ed8e040565bde5360a5b6b3c
+  languageName: node
+  linkType: hard
+
 "forever-agent@npm:~0.6.1":
   version: 0.6.1
   resolution: "forever-agent@npm:0.6.1"
@@ -2842,6 +2854,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fp-ts@npm:^2.9.5":
+  version: 2.11.2
+  resolution: "fp-ts@npm:2.11.2"
+  checksum: 84a524ef320b9376c653ac0d65ca036a3d9db1998711db9e0f72a1d63d158590ae6d3cde850ccbea652fa615de4ff6759af49e977b7526a9ede1c736055a8f5a
+  languageName: node
+  linkType: hard
+
 "fs-extra@npm:^8.1, fs-extra@npm:^8.1.0":
   version: 8.1.0
   resolution: "fs-extra@npm:8.1.0"
@@ -2872,6 +2891,16 @@ __metadata:
     minimatch: ^3.0.2
     rimraf: ^2.6.3
   checksum: 63a0e980a8beeed35b114d4ee98de1bfe23a5d39115f154402327d2e38d5c159608be11ed38baf1e50269831f08c909f0929ddcdb76bf1e9b5d612f996163deb
+  languageName: node
+  linkType: hard
+
+"fs-jetpack@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "fs-jetpack@npm:4.1.1"
+  dependencies:
+    minimatch: ^3.0.2
+    rimraf: ^2.6.3
+  checksum: f30045b4604aeb449fd0dc0856671cb8c2bcf5ecc46239f5c03e3f493f47160e94e93352ab4676a01fa0ba75d20302d0bed4d78d62c10efd6bae396181271938
   languageName: node
   linkType: hard
 
@@ -4203,7 +4232,10 @@ fsevents@^2.3.2:
     eslint: 7.32.0
     eslint-config-prettier: 8.3.0
     eslint-plugin-only-warn: 1.0.3
+    execa: ^5.1.1
+    floggy: ^0.2.3
     format-imports: 2.4.1
+    fs-jetpack: ^4.1.1
     jest: 27.1.1
     jest-watch-select-projects: 2.0.0
     jest-watch-suspend: 1.1.2
