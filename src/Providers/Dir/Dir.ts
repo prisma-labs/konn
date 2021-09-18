@@ -17,12 +17,12 @@ export type Contributes = {
 export const create = (params?: Params): DynamicProvider<Nothing, Contributes> =>
   createDynamicProvider((register) =>
     register.before(() => {
-      dirLog.info(`will_setup`, { params })
+      dirLog.debug(`will_setup`, { params })
 
       const path = params?.path ?? Fs.tmpDir().cwd()
       const fs = Fs.cwd(path)
 
-      dirLog.info(`did_setup`, { cwd: fs.cwd() })
+      dirLog.debug(`did_setup`, { cwd: fs.cwd() })
 
       return {
         fs,
