@@ -1,6 +1,6 @@
-import { merge } from 'lodash'
 /* eslint @typescript-eslint/no-unsafe-return: "off", @typescript-eslint/no-explicit-any: "off" */
 import ono from '@jsdevtools/ono'
+import { merge } from 'lodash'
 import { MaybePromise } from './utils'
 
 /**
@@ -119,7 +119,9 @@ export type RegisterBeforeEach<C1 extends ContextBase> = {
 
 // contributor
 
-export type Setup<C1 extends ContextBase, C2 extends ContextBase> = (upstreamContext: C1) => MaybePromise<C2>
+export type Setup<C1 extends ContextBase, C2 extends ContextBase> = (
+  upstreamContext: C1
+) => MaybePromise<void | C2>
 
 export type Setdown<C1 extends ContextBase = ContextBase> = (context: C1) => MaybePromise<void>
 
