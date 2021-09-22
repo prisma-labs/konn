@@ -42,7 +42,7 @@ export type Contributes = {
  */
 export const create = (params?: Params): DynamicProvider<Needs, Contributes> =>
   createDynamicProvider<Needs, Contributes>((register) =>
-    register.before((ctx) => {
+    register.name('Run').before((ctx) => {
       const cwd = ctx.fs?.cwd() ?? process.cwd()
       const packageManager = params?.packageManager ?? 'npm'
       const stdio = params?.debug ? 'inherit' : undefined
