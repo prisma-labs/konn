@@ -1,1 +1,1 @@
-export { create as kont, createDynamicProvider, Nothing } from './kont'
+export { ContextBase, create as kont, createDynamicProvider, Nothing } from './kont'
