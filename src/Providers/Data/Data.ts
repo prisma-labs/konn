@@ -1,5 +1,4 @@
-import { Nothing } from 'src'
-import { ContextBase, createDynamicProvider, DynamicProvider } from '../../kont'
+import { ContextBase, Nothing, Provider, provider } from '../../'
 import { dataLog } from './dataLog'
 
 /**
@@ -16,10 +15,18 @@ import { dataLog } from './dataLog'
  *   })
  *
  */
-export const create = <D extends ContextBase>(data: D): DynamicProvider<Nothing, D> =>
-  createDynamicProvider((register) =>
-    register.name('Data').before(() => {
+// export const create = <D extends ContextBase>(data: D): Provider<Nothing, D> =>
+//   provider((register) =>
+//     register.name('Data').before((ctx) => {
+//       dataLog.debug('will_add')
+//       return data
+//     })
+//   )
+
+export const create2 = <D extends ContextBase>(data: D): Provider<Nothing, D> =>
+  provider()
+    .name('Data')
+    .before(() => {
       dataLog.debug('will_add')
       return data
     })
-  )
