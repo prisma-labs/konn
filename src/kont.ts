@@ -42,6 +42,7 @@ export function kont<C extends ContextBase = NoContext, C2 extends ContextBase =
   const currentContext: ContextBase = {}
 
   const api: Kont<ContextBase, ContextBase> = {
+    // @ts-expect-error Accessing internal API
     useBeforeAll(provider: ProviderInternal) {
       provider.use({
         currentContext,
@@ -49,7 +50,7 @@ export function kont<C extends ContextBase = NoContext, C2 extends ContextBase =
       })
       return api as any
     },
-
+    // @ts-expect-error Accessing internal API
     useBeforeEach(provider: ProviderInternal) {
       provider.use({
         currentContext,

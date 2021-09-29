@@ -1,8 +1,6 @@
 import { constant } from 'lodash'
 import { kont } from '../src'
-
-const data1 = { a: { b: 1 } }
-const data2 = { z: { y: 99 } }
+import { data1 } from './__data__'
 
 describe('beforeEach context is available to downstream beforeEach & test but NOT beforeAll', () => {
   const ctx = kont()
@@ -12,9 +10,9 @@ describe('beforeEach context is available to downstream beforeEach & test but NO
     .beforeAll((ctx) => ({ b1: ctx.a }))
     .done()
   it('test', () => {
-    expect(ctx.a.b).toBe(1)
+    expect(ctx.a.b).toBe(2)
     expect(ctx.b1).toBe(undefined)
-    expect(ctx.b2).toBe(1)
+    expect(ctx.b2).toBe(2)
   })
 })
 
@@ -25,8 +23,8 @@ describe('beforeAll context is available to downstream beforeAll & beforeEach & 
     .beforeEach((ctx) => ({ b2: ctx.a.b }))
     .done()
   it('test', () => {
-    expect(ctx.a.b).toBe(1)
-    expect(ctx.b1).toBe(1)
-    expect(ctx.b2).toBe(1)
+    expect(ctx.a.b).toBe(2)
+    expect(ctx.b1).toBe(2)
+    expect(ctx.b2).toBe(2)
   })
 })

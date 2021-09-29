@@ -1,11 +1,10 @@
 import { constant, noop } from 'lodash'
 import { ContextBase, NoContext } from 'src/types'
 import { kont, provider } from '../src'
-
-const data1 = { a: { b: 2 } }
+import { Data1, data1, data2 } from './__data__'
 
 describe('can use a noop provider', () => {
-  const ctx = kont().useBeforeAll(provider()).done()
+  const ctx = kont().useBeforeAll(provider().done()).done()
   it('test', () => {
     // @ts-expect-error
     ctx.a
@@ -15,34 +14,34 @@ describe('can use a noop provider', () => {
 
 describe('can use provider explicitly expecting data', () => {
   const p = () =>
-    provider<typeof data1, NoContext>().before((ctx) => {
-      expect(ctx.a.b).toEqual(2)
-    })
+    provider<Data1, NoContext>()
+      .before((ctx) => {
+        expect(ctx.a.b).toEqual(2)
+      })
+      .done()
   kont().beforeAll(constant(data1)).useBeforeAll(p())
   it('test', noop)
 })
 
 describe('static error if provider context needs not met b/c given data different', () => {
   const p = () =>
-    provider<typeof data1, NoContext>().before((ctx) => {
-      expect(ctx.a).toEqual(undefined)
-    })
+    provider<Data1, NoContext>()
+      .before((ctx) => {
+        // static error, thus the runtime undefined violated the data requirement
+        expect(ctx.a).toEqual(undefined)
+      })
+      .done()
   kont()
-    .beforeAll(constant({ z: 9 }))
+    .beforeAll(constant(data2))
     // @ts-expect-error
     .useBeforeAll(p())
   it('test', noop)
 })
 
-describe('static error if provider context needs not met b/c given data different', () => {
-  const p1 = () => provider()
-  const p2 = provider().before(() => {})
-  const p3 = provider().before(() => {
-    return { a: 1 }
-  })
-  kont()
-    .beforeAll(constant({ z: 9 }))
-    .useBeforeAll(p3)
+describe('upstream providers can satisfy requirements of downstream providers', () => {
+  const p1 = provider<{}, Data1>().before(constant(data1)).done()
+  const p2 = provider<Data1, {}>().before(noop).done()
+  kont().useBeforeAll(p1).useBeforeAll(p2)
 
   it('test', noop)
 })

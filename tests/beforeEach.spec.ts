@@ -1,8 +1,6 @@
 import { constant } from 'lodash'
 import { kont } from '../src'
-
-const data1 = { a: { b: 1 } }
-const data2 = { z: { y: 99 } }
+import { data1, data2 } from './__data__'
 
 describe('beforeEach can return nothing which forwards the context', () => {
   const ctx = kont()
@@ -10,7 +8,7 @@ describe('beforeEach can return nothing which forwards the context', () => {
     .beforeEach(() => {})
     .done()
   it('test', () => {
-    expect(ctx.a.b).toEqual(1)
+    expect(ctx.a.b).toEqual(2)
   })
 })
 
@@ -20,7 +18,7 @@ describe('beforeEach can return data which gets deeply merged into the context',
     .beforeEach(() => data2)
     .done()
   it('test', () => {
-    expect(ctx.a.b).toEqual(1)
+    expect(ctx.a.b).toEqual(2)
     expect(ctx.z.y).toEqual(99)
   })
 })
@@ -32,7 +30,7 @@ describe('beforeEach can return nothing in the middle of a chain', () => {
     .beforeEach(() => data2)
     .done()
   it('test', () => {
-    expect(ctx.a.b).toEqual(1)
+    expect(ctx.a.b).toEqual(2)
     expect(ctx.z.y).toEqual(99)
   })
 })

@@ -1,9 +1,7 @@
 /* eslint @typescript-eslint/ban-types: "off" */
 import { MaybePromise } from './utils'
 
-export type Setup<C1 extends ContextBase = NoContext, C2 extends ContextBase = NoContext> = (
-  context: C1
-) => MaybePromise<void | C2>
+export type Setup<C1 extends ContextBase, C2 extends ContextBase> = (context: C1) => MaybePromise<void | C2>
 
 export type Setdown<C1 extends ContextBase = ContextBase> = (context: C1) => MaybePromise<void>
 

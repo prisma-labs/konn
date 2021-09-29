@@ -14,6 +14,8 @@
   ],
   "overrides": [],
   "rules": {
+    // Want easy access to {} for this codebase.
+    "@typescript-eslint/ban-types": "off",
     // TypeScript makes these safe & effective
     "no-case-declarations": "off",
     // This rule marks nameof as a warning which is annoying if
