@@ -12,3 +12,5 @@ export type MergeC<C1 extends ContextBase, C2 extends ContextBase> = C1 & C2
 export type Nothing = ContextBase
 
 export type NoContext = {}
+
+export type NeedsNothing = {}
