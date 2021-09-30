@@ -129,6 +129,7 @@ const browser = (params: LaunchOptions) =>
     .after(async (ctx) => {
       await ctx.browser.close()
     })
+    .done()
 
 const ctx = kont()
   // 3
@@ -169,6 +170,7 @@ const browser = (params: LaunchOptions) =>
     .after(async (ctx) => {
       await ctx.browser.close()
     })
+    .done()
 ```
 
 ```ts
@@ -191,7 +193,7 @@ test('...', async () => {
 })
 ```
 
-Finally, another super power of Kont is that it is fully type safe. And that also implies great autocomplete, of course. Here are just some examples to give you a _rough idea_.
+Finally, another super power of Kont is that it is fully type safe. And that also implies great autocomplete. Here are just some examples to give you a _rough idea_.
 
 ```ts
 const ctx = kont()
