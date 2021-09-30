@@ -1,5 +1,5 @@
 import * as Execa from 'execa'
-import { createDynamicProvider, DynamicProvider } from '../../kont'
+import { provider, Provider } from '../../'
 import { Dir } from '../Dir'
 import { runLog } from './runLog'
 
@@ -40,9 +40,10 @@ export type Contributes = {
  *
  * If upstream includes `Dir` provider then is used to get the default CWD for commands.
  */
-export const create = (params?: Params): DynamicProvider<Needs, Contributes> =>
-  createDynamicProvider<Needs, Contributes>((register) =>
-    register.name('Run').before((ctx) => {
+export const create = (params?: Params): Provider<Needs, Contributes> =>
+  provider<Needs, Contributes>()
+    .name('Run')
+    .before((ctx) => {
       const cwd = ctx.fs?.cwd() ?? process.cwd()
       const packageManager = params?.packageManager ?? 'npm'
       const stdio = params?.debug ? 'inherit' : undefined
@@ -94,4 +95,4 @@ export const create = (params?: Params): DynamicProvider<Needs, Contributes> =>
 
       return api
     })
-  )
+    .done()

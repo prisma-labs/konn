@@ -1,6 +1,6 @@
 import * as Fs from 'fs-jetpack'
 import { FSJetpack } from 'fs-jetpack/types'
-import { createDynamicProvider, DynamicProvider, Nothing } from '../../kont'
+import { Nothing, provider, Provider } from '../../'
 import { dirLog } from './dirLog'
 
 export type Params = {
@@ -14,9 +14,10 @@ export type Contributes = {
 /**
  * Create a Dir provider.
  */
-export const create = (params?: Params): DynamicProvider<Nothing, Contributes> =>
-  createDynamicProvider((register) =>
-    register.name('Dir').before(() => {
+export const create = (params?: Params): Provider<Nothing, Contributes> =>
+  provider()
+    .name('Dir')
+    .before(() => {
       dirLog.debug(`will_setup`, { params })
 
       const path = params?.path ?? Fs.tmpDir().cwd()
@@ -28,4 +29,4 @@ export const create = (params?: Params): DynamicProvider<Nothing, Contributes> =
         fs,
       }
     })
-  )
+    .done()
