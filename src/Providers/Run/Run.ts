@@ -1,5 +1,5 @@
 import * as Execa from 'execa'
-import { Provider, provider } from '../../'
+import { provider, Provider } from '../../'
 import { Dir } from '../Dir'
 import { runLog } from './runLog'
 

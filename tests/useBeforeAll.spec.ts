@@ -1,7 +1,7 @@
 import { constant, noop } from 'lodash'
 import { NoContext } from 'src/types'
 import { kont, provider } from '../src'
-import { Data1, data1, data2 } from './__data__'
+import { data1, Data1, data2 } from './__data__'
 
 describe('can use a noop provider', () => {
   const ctx = kont().useBeforeAll(provider().done()).done()

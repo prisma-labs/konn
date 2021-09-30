@@ -1,6 +1,6 @@
 import * as Fs from 'fs-jetpack'
 import { FSJetpack } from 'fs-jetpack/types'
-import { Nothing, Provider, provider } from '../../'
+import { Nothing, provider, Provider } from '../../'
 import { dirLog } from './dirLog'
 
 export type Params = {

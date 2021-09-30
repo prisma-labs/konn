@@ -1,5 +1,5 @@
-import ono from '@jsdevtools/ono'
 import { merge } from 'lodash'
+import ono from '@jsdevtools/ono'
 import { HookNames, jestHookLookup } from './jest'
 import { ContextBase, Setdown, Setup } from './types'
 
