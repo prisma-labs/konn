@@ -4,7 +4,7 @@ import { kont, provider } from '../src'
 import { Data1, data1, data2 } from './__data__'
 
 describe('can use a noop provider', () => {
-  const ctx = kont().useBeforeAll(provider().done()).done()
+  const ctx = kont().useBeforeEach(provider().done()).done()
   it('test', () => {
     // @ts-expect-error
     ctx.a
@@ -19,14 +19,14 @@ describe('can use provider explicitly expecting data', () => {
         expect(ctx.a.b).toEqual(2)
       })
       .done()
-  kont().beforeAll(constant(data1)).useBeforeAll(p())
+  kont().beforeEach(constant(data1)).useBeforeEach(p())
   it('test', noop)
 })
 
 describe('upstream providers can satisfy requirements of downstream providers', () => {
   const p1 = provider<{}, Data1>().before(constant(data1)).done()
   const p2 = provider<Data1, {}>().before(noop).done()
-  kont().useBeforeAll(p1).useBeforeAll(p2)
+  kont().useBeforeEach(p1).useBeforeEach(p2)
 
   it('test', noop)
 })
@@ -40,9 +40,9 @@ describe('static error if provider context needs not met b/c given data differen
       })
       .done()
   kont()
-    .beforeAll(constant(data2))
+    .beforeEach(constant(data2))
     // @ts-expect-error
-    .useBeforeAll(p())
+    .useBeforeEach(p())
   it('test', noop)
 })
 
@@ -53,6 +53,6 @@ describe('static error if provider context needs not met b/c no data', () => {
     })
     .done()
   // @ts-expect-error
-  kont().useBeforeAll(p)
+  kont().useBeforeEach(p)
   it('test', noop)
 })
