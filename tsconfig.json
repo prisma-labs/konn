@@ -27,7 +27,7 @@
     "noErrorTruncation": true,
     "baseUrl": "./",
     "paths": {
-      "#*": ["./src/lib/*"]
+      "~/*": ["./src/*"]
     },
 
     // Other

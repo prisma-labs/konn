@@ -59,6 +59,7 @@
     "floggy": "^0.2.3",
     "fs-jetpack": "^4.1.1",
     "lodash": "^4.17.21",
+    "playwright": "^1.15.1",
     "tslib": "^2.3.1"
   },
   "devDependencies": {
