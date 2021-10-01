@@ -1,3 +1,4 @@
+import { noop } from 'lodash'
 import { kont } from '~/kont'
 import { Providers } from '~/Providers'
 
@@ -6,8 +7,22 @@ import { Providers } from '~/Providers'
  */
 type _Types = [Providers.Dir.Needs, Providers.Dir.Contributes, Providers.Browser.Params]
 
-const ctx = kont().useBeforeAll(Providers.Dir.create()).done()
+describe(`ctx has access to fs-jetpack pointed at created directory`, () => {
+  const ctx = kont().useBeforeAll(Providers.Dir.create()).done()
 
-it('ctx has access to browser', () => {
-  expect(ctx.fs.cwd()).not.toEqual(process.cwd())
+  it(`test`, () => {
+    expect(ctx.fs.cwd()).not.toEqual(process.cwd())
+  })
+})
+
+describe('can cleanup dir after test', () => {
+  const ctx = kont()
+    .useBeforeAll(Providers.Dir.create({ cleanup: true }))
+    .done()
+
+  it('test', noop)
+
+  afterAll(() => {
+    expect(ctx.fs.exists(ctx.fs.cwd())).toBe(false)
+  })
 })
