@@ -36,20 +36,20 @@ export const create = (params?: Params): Provider<Needs, Contributes> => {
   return provider<NeedsNothing, Contributes>()
     .name('browser')
     .before(async () => {
-      browserLog.debug('will_setup')
+      browserLog.trace('will_setup')
 
       const context = {
         browser: await config.browser.launch(config.launchOptions),
       }
 
-      browserLog.debug('did_setup')
+      browserLog.trace('did_setup')
 
       return context
     })
     .after(async (ctx) => {
-      browserLog.debug('will_setdown')
+      browserLog.trace('will_setdown')
       await ctx.browser.close()
-      browserLog.debug('did_setdown')
+      browserLog.trace('did_setdown')
     })
     .done()
 }

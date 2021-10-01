@@ -50,7 +50,7 @@ export const create = (params?: Params): Provider<Needs, Contributes> =>
 
       const api: Contributes = {
         run(command, options) {
-          runLog.debug(`will_run`, { command })
+          runLog.trace(`will_run`, { command })
           return Execa.commandSync(command, {
             stdio,
             cwd,
@@ -59,7 +59,7 @@ export const create = (params?: Params): Provider<Needs, Contributes> =>
           })
         },
         runPackageScript(command, options) {
-          runLog.debug(`will_run`, { command })
+          runLog.trace(`will_run`, { command })
           return Execa.commandSync(`${packageManager} run --silent ${command}`, {
             cwd,
             stdio,
@@ -68,7 +68,7 @@ export const create = (params?: Params): Provider<Needs, Contributes> =>
           })
         },
         runOrThrow(command, options) {
-          runLog.debug(`will_run`, { command })
+          runLog.trace(`will_run`, { command })
           return Execa.commandSync(command, {
             cwd,
             stdio,
@@ -76,7 +76,7 @@ export const create = (params?: Params): Provider<Needs, Contributes> =>
           })
         },
         runOrThrowPackageScript(command, options) {
-          runLog.debug(`will_run`, { command })
+          runLog.trace(`will_run`, { command })
           return Execa.commandSync(`${packageManager} run --silent ${command}`, {
             cwd,
             stdio,
@@ -84,7 +84,7 @@ export const create = (params?: Params): Provider<Needs, Contributes> =>
           })
         },
         runAsync(command, options) {
-          runLog.debug(`will_run`, { command })
+          runLog.trace(`will_run`, { command })
           return Execa.command(command, {
             cwd,
             stdio,

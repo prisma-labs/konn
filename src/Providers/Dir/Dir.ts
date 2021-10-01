@@ -43,7 +43,7 @@ export const create = (params?: Params): Provider<Needs, Contributes> => {
   return provider()
     .name('Dir')
     .before(() => {
-      dirLog.debug(`will_setup`, { params })
+      dirLog.trace(`will_setup`, { params })
 
       const path = config.path ?? Fs.tmpDir().cwd()
       const fs = Fs.cwd(path)
@@ -51,18 +51,18 @@ export const create = (params?: Params): Provider<Needs, Contributes> => {
         fs,
       }
 
-      dirLog.debug(`did_setup`, { cwd: fs.cwd() })
+      dirLog.trace(`did_setup`, { cwd: fs.cwd() })
 
       return context
     })
     .after((ctx) => {
-      dirLog.debug(`will_setdown`, { params })
+      dirLog.trace(`will_setdown`, { params })
 
       if (config.cleanup) {
         ctx.fs.remove(ctx.fs.cwd())
       }
 
-      dirLog.debug(`did_setdown`)
+      dirLog.trace(`did_setdown`)
     })
     .done()
 }
