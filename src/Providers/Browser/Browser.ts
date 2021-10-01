@@ -1,5 +1,6 @@
 import { Browser, BrowserType, chromium, LaunchOptions } from 'playwright'
 import { NeedsNothing, Provider, provider } from '../../'
+import { browserLog } from './browserLog'
 
 export type Needs = NeedsNothing
 
@@ -34,11 +35,21 @@ export const create = (params?: Params): Provider<Needs, Contributes> => {
 
   return provider<NeedsNothing, Contributes>()
     .name('browser')
-    .before(async () => ({
-      browser: await config.browser.launch(config.launchOptions),
-    }))
+    .before(async () => {
+      browserLog.debug('will_setup')
+
+      const context = {
+        browser: await config.browser.launch(config.launchOptions),
+      }
+
+      browserLog.debug('did_setup')
+
+      return context
+    })
     .after(async (ctx) => {
+      browserLog.debug('will_setdown')
       await ctx.browser.close()
+      browserLog.debug('did_setdown')
     })
     .done()
 }
