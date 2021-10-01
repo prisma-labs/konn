@@ -1,14 +1,14 @@
-import { constant } from 'lodash'
+import { constant, noop } from 'lodash'
+import { Providers } from '~/Providers'
 import { kont } from '../src'
 import { data1 } from './__data__'
 
-// TODO
-// describe('static type error when provier passed to inline hooks', () => {
-//   // @ts-expect-error
-//   kont().beforeAll(Providers.Dir.create())
-//   // This test is skipped since if it runs it will lead to a runtime error given the above bad usage.
-//   it.skip('test', noop)
-// })
+describe('static type error when provier passed to inline hooks', () => {
+  // @ts-expect-error
+  kont().beforeAll(Providers.Dir.create())
+  // This test is skipped since if it runs it will lead to a runtime error given the above bad usage.
+  it.skip('test', noop)
+})
 
 describe('beforeEach context is available to downstream beforeEach & test but NOT beforeAll', () => {
   const ctx = kont()
