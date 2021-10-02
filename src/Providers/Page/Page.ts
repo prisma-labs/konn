@@ -1,7 +1,6 @@
 import { Browser, BrowserContext, BrowserContextOptions, chromium, Page } from 'playwright'
 import { Provider } from '~/provider'
 import { provider } from '../../'
-import { pageLog } from './pageLog'
 
 jest.setTimeout(10_000)
 
@@ -52,22 +51,20 @@ export const create = (params?: Params): Provider<Needs, Contributes> => {
 
   return provider<Needs, Contributes>()
     .name('page')
-    .before(async (ctx) => {
-      pageLog.trace('will_setup')
-
+    .before(async (ctx, { log }) => {
       let browser
       if (ctx.browser) {
         browser = ctx.browser
       } else {
-        pageLog.trace('setup_browser', { reason: 'not present in upstream conrtext' })
+        log.trace('setup_browser', { reason: 'not present in upstream conrtext' })
         browser = await chromium.launch()
         optionalResources.browser = browser
       }
 
-      pageLog.trace('setup_context')
+      log.trace('setup_context')
       const browserContext = await browser.newContext(config.browserContextOptions)
 
-      pageLog.trace('setup_page')
+      log.trace('setup_page')
       const page = await browserContext.newPage()
 
       const context = {
@@ -75,18 +72,14 @@ export const create = (params?: Params): Provider<Needs, Contributes> => {
         browserContext,
       }
 
-      pageLog.trace('did_setup')
-
       return context
     })
     .after(async (ctx) => {
-      pageLog.trace('will_setdown')
       await optionalResources.browser?.close()
       // TODO not guaranteed to be here, think about type safety design... failure scenarios, ...
       // This is based on real world errors, but needs minimal repro to understand better
       await ctx.browserContext.close()
       await ctx.page.close()
-      pageLog.trace('did_setdown')
     })
     .done()
 }
