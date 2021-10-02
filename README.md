@@ -2,6 +2,21 @@
 
 [![trunk](https://github.com/prisma-labs/kont/actions/workflows/trunk.yml/badge.svg)](https://github.com/prisma-labs/kont/actions/workflows/trunk.yml)
 
+<!-- toc -->
+
+- [Installation](#installation)
+- [Features](#features)
+- [Example](#example)
+- [Introduction](#introduction)
+- [Guide](#guide)
+  - [Context Builder VS Provider Builder APIs](#context-builder-vs-provider-builder-apis)
+  - [Inline Hooks](#inline-hooks)
+  - [Providers](#providers)
+  - [Standard Providers](#standard-providers)
+- [Reference Docs](#reference-docs)
+
+<!-- tocstop -->
+
 ## Installation
 
 ```
