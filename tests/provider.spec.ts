@@ -1,5 +1,5 @@
 import { constant, noop } from 'lodash'
-import { provider } from '../src'
+import { kont, provider } from '../src'
 import { data1, Data1 } from './__data__'
 
 it('can create a provider', () => {
@@ -85,4 +85,42 @@ it('afters cannot return context ', () => {
     .after(() => {
       return data1
     })
+})
+
+describe('provider has access to provider utils', () => {
+  describe('beforeEach', () => {
+    const p = provider()
+      .name('p')
+      .before((_, utils) => {
+        expect(utils.hook).toEqual('each')
+        expect(utils.name).toEqual('p')
+        expect(typeof utils.log.info).toEqual('function')
+      })
+      .after((_, utils) => {
+        expect(utils.hook).toEqual('each')
+        expect(utils.name).toEqual('p')
+        expect(typeof utils.log.info).toEqual('function')
+      })
+      .done()
+    kont().useBeforeEach(p)
+    it('test', noop)
+  })
+
+  describe('beforeAll', () => {
+    const p = provider()
+      .name('p')
+      .before((_, utils) => {
+        expect(utils.hook).toEqual('all')
+        expect(utils.name).toEqual('p')
+        expect(typeof utils.log.info).toEqual('function')
+      })
+      .after((_, utils) => {
+        expect(utils.hook).toEqual('all')
+        expect(utils.name).toEqual('p')
+        expect(typeof utils.log.info).toEqual('function')
+      })
+      .done()
+    kont().useBeforeAll(p)
+    it('test', noop)
+  })
 })

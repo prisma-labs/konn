@@ -19,3 +19,12 @@ export namespace HookNames {
   export type Setdown = 'afterEach' | 'afterAll'
   export type All = Setdown | Setup
 }
+
+export type HookPhaseNames = 'each' | 'all'
+
+export const jestHookToPhase = {
+  beforeAll: 'all',
+  beforeEach: 'each',
+  afterAll: 'all',
+  afterEach: 'each',
+} as const

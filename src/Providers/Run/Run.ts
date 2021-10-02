@@ -1,7 +1,6 @@
 import * as Execa from 'execa'
 import { provider, Provider } from '../../'
 import { Dir } from '../Dir'
-import { runLog } from './runLog'
 
 export type Params = {
   /**
@@ -43,14 +42,14 @@ export type Contributes = {
 export const create = (params?: Params): Provider<Needs, Contributes> =>
   provider<Needs, Contributes>()
     .name('Run')
-    .before((ctx) => {
+    .before((ctx, { log }) => {
       const cwd = ctx.fs?.cwd() ?? process.cwd()
       const packageManager = params?.packageManager ?? 'npm'
       const stdio = params?.debug ? 'inherit' : undefined
 
       const api: Contributes = {
         run(command, options) {
-          runLog.trace(`will_run`, { command })
+          log.trace(`will_run`, { command })
           return Execa.commandSync(command, {
             stdio,
             cwd,
@@ -59,7 +58,7 @@ export const create = (params?: Params): Provider<Needs, Contributes> =>
           })
         },
         runPackageScript(command, options) {
-          runLog.trace(`will_run`, { command })
+          log.trace(`will_run`, { command })
           return Execa.commandSync(`${packageManager} run --silent ${command}`, {
             cwd,
             stdio,
@@ -68,7 +67,7 @@ export const create = (params?: Params): Provider<Needs, Contributes> =>
           })
         },
         runOrThrow(command, options) {
-          runLog.trace(`will_run`, { command })
+          log.trace(`will_run`, { command })
           return Execa.commandSync(command, {
             cwd,
             stdio,
@@ -76,7 +75,7 @@ export const create = (params?: Params): Provider<Needs, Contributes> =>
           })
         },
         runOrThrowPackageScript(command, options) {
-          runLog.trace(`will_run`, { command })
+          log.trace(`will_run`, { command })
           return Execa.commandSync(`${packageManager} run --silent ${command}`, {
             cwd,
             stdio,
@@ -84,7 +83,7 @@ export const create = (params?: Params): Provider<Needs, Contributes> =>
           })
         },
         runAsync(command, options) {
-          runLog.trace(`will_run`, { command })
+          log.trace(`will_run`, { command })
           return Execa.command(command, {
             cwd,
             stdio,
