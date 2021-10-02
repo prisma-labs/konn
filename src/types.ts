@@ -26,7 +26,7 @@ export type Setup<C1 extends ContextBase, C2 extends ContextBase> = (
 ) => MaybePromise<void | C2>
 
 export type Setdown<C1 extends ContextBase = ContextBase> = (
-  context: C1,
+  context: Partial<C1>,
   utils: ProviderUtils
 ) => MaybePromise<void>
 
