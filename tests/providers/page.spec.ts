@@ -7,7 +7,7 @@ import { Providers } from '~/Providers'
  */
 type _Types = [Providers.Page.Needs, Providers.Page.Contributes, Providers.Browser.Params]
 
-describe(`ctx has access to page, creates chromium browser when no browser given in context`, () => {
+describe(`when browser not in context, chromium browser created and used`, () => {
   const ctx = kont().useBeforeAll(Providers.Page.create()).done()
 
   it(`test`, async () => {
@@ -18,7 +18,7 @@ describe(`ctx has access to page, creates chromium browser when no browser given
   })
 })
 
-describe(`ctx has access to page, uses browser in context if given`, () => {
+describe(`when browser in context, is used`, () => {
   const ctx = kont()
     .useBeforeAll(Providers.Browser.create({ browser: firefox }))
     .useBeforeAll(Providers.Page.create())
