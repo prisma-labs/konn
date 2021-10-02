@@ -1,5 +1,5 @@
 import { Browser, BrowserType, chromium, LaunchOptions } from 'playwright'
-import { NeedsNothing, Provider, provider } from '../../'
+import { NeedsNothing, provider, Provider } from '../../'
 import { browserLog } from './browserLog'
 
 export type Needs = NeedsNothing
