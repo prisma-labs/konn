@@ -1,6 +1,6 @@
 import { Browser, BrowserContext, BrowserContextOptions, chromium, Page } from 'playwright'
 import { Provider } from '~/provider'
-import { provider } from '../..'
+import { provider } from '../../'
 import { pageLog } from './pageLog'
 
 jest.setTimeout(10_000)
