@@ -2,8 +2,6 @@ import { Browser, BrowserContext, BrowserContextOptions, chromium, Page } from '
 import { Provider } from '~/provider'
 import { provider } from '../../'
 
-jest.setTimeout(10_000)
-
 /**
  * Context data that Page provder needs.
  */
