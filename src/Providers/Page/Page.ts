@@ -76,10 +76,8 @@ export const create = (params?: Params): Provider<Needs, Contributes> => {
     })
     .after(async (ctx) => {
       await optionalResources.browser?.close()
-      // TODO not guaranteed to be here, think about type safety design... failure scenarios, ...
-      // This is based on real world errors, but needs minimal repro to understand better
-      await ctx.browserContext.close()
-      await ctx.page.close()
+      await ctx.browserContext?.close()
+      await ctx.page?.close()
     })
     .done()
 }

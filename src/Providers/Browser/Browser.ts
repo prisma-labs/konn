@@ -42,7 +42,7 @@ export const create = (params?: Params): Provider<Needs, Contributes> => {
       return context
     })
     .after(async (ctx) => {
-      await ctx.browser.close()
+      await ctx.browser?.close()
     })
     .done()
 }

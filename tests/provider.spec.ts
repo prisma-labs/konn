@@ -33,7 +33,7 @@ it('before-context available to afters ', () => {
   provider()
     .before(constant(data1))
     .after((ctx) => {
-      ctx.a.b.toFixed() // typechecks
+      ctx.a?.b.toFixed() // typechecks
     })
 })
 
@@ -41,7 +41,7 @@ it('explicit Contributes generic forces before return type', () => {
   provider<{}, { a: { b: number } }>()
     .before(constant(data1))
     .after((ctx) => {
-      ctx.a.b.toFixed() // typechecks
+      ctx.a?.b.toFixed() // typechecks
     })
   provider<{}, { a: { b: number } }>()
     // @ts-expect-error
@@ -54,7 +54,7 @@ it('explicit Needs generic types before & after parameters', () => {
       ctx.a.b.toFixed() // typechecks
     })
     .after((ctx) => {
-      ctx.a.b.toFixed() // typechecks
+      ctx.a?.b.toFixed() // typechecks
     })
 })
 

@@ -52,7 +52,7 @@ export const create = (params?: Params): Provider<Needs, Contributes> => {
     })
     .after((ctx) => {
       if (config.cleanup) {
-        ctx.fs.remove(ctx.fs.cwd())
+        ctx.fs?.remove(ctx.fs.cwd())
       }
     })
     .done()

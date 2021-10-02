@@ -56,3 +56,17 @@ describe('static error if provider context needs not met b/c no data', () => {
   kont().useBeforeAll(p)
   it('test', noop)
 })
+
+describe('after context is partial', () => {
+  const p = provider()
+    .before(constant(data1))
+    .after((ctx) => {
+      ctx.a
+      ctx.a?.b.toFixed()
+      // @ts-expect-error
+      ctx.a.b.toFixed()
+    })
+    .done()
+  kont().useBeforeAll(p).done()
+  it('test', noop)
+})
