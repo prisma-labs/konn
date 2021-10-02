@@ -1,7 +1,7 @@
 /* eslint @typescript-eslint/no-unsafe-return: "off", @typescript-eslint/no-explicit-any: "off" */
 import { Provider, ProviderInternal } from './provider'
-import { runSetup } from './runners'
-import { ContextBase, MergeC, NoContext, Setup } from './types'
+import { runSetdown, runSetup } from './runners'
+import { ContextBase, MergeC, NoContext, Setdown, Setup } from './types'
 
 /**
  * A test context allows incrementally consumer test context providers that augment the test suite in a modular way.
@@ -9,11 +9,18 @@ import { ContextBase, MergeC, NoContext, Setup } from './types'
  */
 // prettier-ignore
 export interface Kont<BAC1 extends ContextBase, BEC1 extends ContextBase> {
+  // Inline Hooks
+
   beforeAll    <BAC2 extends ContextBase>(setup: Setup<BAC1, BAC2>):              Kont<NoContext extends BAC2 ? BAC1 : MergeC<BAC1,BAC2>, NoContext extends BAC2 ? BEC1 : MergeC<BEC1,BAC2>>
   beforeEach   <BEC2 extends ContextBase>(setup: Setup<BEC1, BEC2>):              Kont<BAC1,                                              NoContext extends BEC2 ? BEC1 : MergeC<BEC1,BEC2>>
 
-  useBeforeAll <BAC2 extends ContextBase>(provider: Provider<BAC1, BAC2>): Kont<NoContext extends BAC2 ? BAC1 : MergeC<BAC1,BAC2>, NoContext extends BAC2 ? BEC1 : MergeC<BEC1,BAC2>>
-  useBeforeEach<BEC2 extends ContextBase>(provider: Provider<BEC1, BEC2>): Kont<BAC1,                                              NoContext extends BEC2 ? BEC1 : MergeC<BEC1,BEC2>>
+  afterAll                               (setdown: Setdown<MergeC<BAC1,BEC1>>):   Kont<BAC1, BEC1>
+  afterEach                              (setdown: Setdown<MergeC<BAC1,BEC1>>):   Kont<BAC1, BEC1>
+
+  // Providers
+
+  useBeforeAll <BAC2 extends ContextBase>(provider: Provider<BAC1, BAC2>):        Kont<NoContext extends BAC2 ? BAC1 : MergeC<BAC1,BAC2>, NoContext extends BAC2 ? BEC1 : MergeC<BEC1,BAC2>>
+  useBeforeEach<BEC2 extends ContextBase>(provider: Provider<BEC1, BEC2>):        Kont<BAC1,                                              NoContext extends BEC2 ? BEC1 : MergeC<BEC1,BEC2>>
 
   /**
    * Signal completion of incremental context building.
@@ -75,6 +82,26 @@ export function kont<C extends ContextBase = NoContext, C2 extends ContextBase =
         providerName: 'INLINE',
         jestHookName: 'beforeEach',
         setup,
+      })
+      return api as any
+    },
+
+    afterAll(setdown) {
+      runSetdown({
+        currentContext,
+        providerName: `INLINE`,
+        jestHookName: 'afterAll',
+        setdown,
+      })
+      return api as any
+    },
+
+    afterEach(setdown) {
+      runSetdown({
+        currentContext,
+        providerName: `INLINE`,
+        jestHookName: 'afterEach',
+        setdown,
       })
       return api as any
     },

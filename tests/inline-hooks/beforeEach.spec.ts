@@ -1,21 +1,21 @@
 import { constant } from 'lodash'
-import { kont } from '../src'
-import { data1, data2 } from './__data__'
+import { kont } from '../../src'
+import { data1, data2 } from '../__data__'
 
-describe('beforeAll can return nothing which forwards the context', () => {
+describe('beforeEach can return nothing which forwards the context', () => {
   const ctx = kont()
-    .beforeAll(constant(data1))
-    .beforeAll(() => {})
+    .beforeEach(constant(data1))
+    .beforeEach(() => {})
     .done()
   it('test', () => {
     expect(ctx.a.b).toEqual(2)
   })
 })
 
-describe('beforeAll can return data which gets deeply merged into the context', () => {
+describe('beforeEach can return data which gets deeply merged into the context', () => {
   const ctx = kont()
-    .beforeAll(() => data1)
-    .beforeAll(() => data2)
+    .beforeEach(() => data1)
+    .beforeEach(() => data2)
     .done()
   it('test', () => {
     expect(ctx.a.b).toEqual(2)
@@ -23,11 +23,11 @@ describe('beforeAll can return data which gets deeply merged into the context', 
   })
 })
 
-describe('beforeAll can return nothing in the middle of a chain', () => {
+describe('beforeEach can return nothing in the middle of a chain', () => {
   const ctx = kont()
-    .beforeAll(() => data1)
-    .beforeAll(() => {})
-    .beforeAll(() => data2)
+    .beforeEach(() => data1)
+    .beforeEach(() => {})
+    .beforeEach(() => data2)
     .done()
   it('test', () => {
     expect(ctx.a.b).toEqual(2)
@@ -37,7 +37,7 @@ describe('beforeAll can return nothing in the middle of a chain', () => {
 
 describe('default context is an empty object', () => {
   const ctx = kont()
-    .beforeAll((ctx) => {
+    .beforeEach((ctx) => {
       // @ts-expect-error
       ctx.a
     })
