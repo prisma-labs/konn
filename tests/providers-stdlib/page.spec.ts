@@ -2,7 +2,7 @@ import { firefox } from 'playwright'
 import { kont } from '~/kont'
 import { Providers } from '~/Providers'
 
-jest.setTimeout(20_000)
+jest.setTimeout(60_000)
 
 /**
  * Test that expected types are exported
