@@ -220,7 +220,7 @@ kont()
 
 Kont has two primary APIs. A context builder and a provider builer.
 
-The context buildre is the priamry use-case of Kont for day to day work.
+The context builder is the primary use-case of Kont for day to day work.
 
 The provider builder API is for library authors and your own project needs when you've found patterns you want to factor out.
 
@@ -364,7 +364,7 @@ kont()
 Kont's typings are smart enough to correctly handle lifecycle hook order, so this as an error for example:
 
 ```ts
-// Error! Foo provider is in an before-all-hook which cannot see the context from before-all hooks
+// Error! Foo provider is in an before-all-hook which cannot see the context from before-each hooks
 kont()
   .beforeEach(() => ({ toto: true }))
   .useBeforeAll(foo())
