@@ -1,4 +1,5 @@
 /* eslint @typescript-eslint/no-unsafe-return: "off", @typescript-eslint/no-explicit-any: "off" */
+import { provider, providers } from '.'
 import { Provider, ProviderInternal } from './provider'
 import { runSetdown, runSetup } from './runners'
 import { ContextBase, MergeC, NoContext, Setdown, Setup } from './types'
@@ -19,8 +20,8 @@ export interface Kont<BAC1 extends ContextBase, BEC1 extends ContextBase> {
 
   // Providers
 
-  useBeforeAll <BAC2 extends ContextBase>(provider: Provider<BAC1, BAC2>):        Kont<NoContext extends BAC2 ? BAC1 : MergeC<BAC1,BAC2>, NoContext extends BAC2 ? BEC1 : MergeC<BEC1,BAC2>>
-  useBeforeEach<BEC2 extends ContextBase>(provider: Provider<BEC1, BEC2>):        Kont<BAC1,                                              NoContext extends BEC2 ? BEC1 : MergeC<BEC1,BEC2>>
+  useBeforeAll <BAC2 extends ContextBase>(...providers: Provider<BAC1, BAC2>[]):  Kont<NoContext extends BAC2 ? BAC1 : MergeC<BAC1,BAC2>, NoContext extends BAC2 ? BEC1 : MergeC<BEC1,BAC2>>
+  useBeforeEach<BEC2 extends ContextBase>(...providers: Provider<BEC1, BEC2>[]):  Kont<BAC1,                                              NoContext extends BEC2 ? BEC1 : MergeC<BEC1,BEC2>>
 
   /**
    * Signal completion of incremental context building.
@@ -50,18 +51,22 @@ export function kont<C extends ContextBase = NoContext, C2 extends ContextBase =
 
   const api: Kont<ContextBase, ContextBase> = {
     // @ts-expect-error Accessing internal API
-    useBeforeAll(provider: ProviderInternal) {
-      provider.use({
-        currentContext,
-        jestHookName: 'beforeAll',
+    useBeforeAll(...providers: ProviderInternal[]) {
+      providers.forEach((provider) => {
+        provider.use({
+          currentContext,
+          jestHookName: 'beforeAll',
+        })
       })
       return api as any
     },
     // @ts-expect-error Accessing internal API
-    useBeforeEach(provider: ProviderInternal) {
-      provider.use({
-        currentContext,
-        jestHookName: 'beforeEach',
+    useBeforeEach(...providers: ProviderInternal[]) {
+      providers.forEach((provider) => {
+        provider.use({
+          currentContext,
+          jestHookName: 'beforeEach',
+        })
       })
       return api as any
     },
