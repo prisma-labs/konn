@@ -13,9 +13,9 @@
   - [Inline Hooks](#inline-hooks)
   - [Providers](#providers)
   - [Standard Providers](#standard-providers)
+- [Q & A](#q--a)
+  - [How does context merge?](#how-does-context-merge)
 - [Reference Docs](#reference-docs)
-  - [Q & A](#q--a)
-    - [How does context merge?](#how-does-context-merge)
 
 <!-- tocstop -->
 
@@ -384,11 +384,7 @@ For in-depth usage details refer to each one's JSDoc.
 - `Page` Get a [Playwright](https://playwright.dev/) [page](https://playwright.dev/docs/api/class-page).
 - `Run` Handy child-process methods powered by [Execa](https://github.com/sindresorhus/execa). If `Dir` in upstream context then used for default [CWD](https://github.com/sindresorhus/execa#cwd).
 
-## Reference Docs
-
-[Read reference docs on Paka](http://paka.dev/npm/kont)
-
-### Q & A
+## Q & A
 
 #### How does context merge?
 
@@ -412,3 +408,7 @@ expect(ctx).toMatchObject({
   },
 })
 ```
+
+## Reference Docs
+
+[Read reference docs on Paka](http://paka.dev/npm/kont)
