@@ -1,7 +1,7 @@
-import { constant, noop } from 'lodash'
+import { constant, merge, noop } from 'lodash'
 import { Providers } from '~/Providers'
-import { kont } from '../src'
-import { data1 } from './__data__'
+import { kont, provider } from '../src'
+import { data1, deepData1, deepData2 } from './__data__'
 
 describe('static type error when provier passed to inline hooks', () => {
   // @ts-expect-error
@@ -34,5 +34,19 @@ describe('beforeAll context is available to downstream beforeAll & beforeEach & 
     expect(ctx.a.b).toBe(2)
     expect(ctx.b1).toBe(2)
     expect(ctx.b2).toBe(2)
+  })
+})
+
+describe('deep merges', () => {
+  const p1 = provider().before(constant(deepData1)).done()
+  const p2 = provider().before(constant(deepData2)).done()
+  const ctx = kont()
+    .useBeforeAll(p1)
+    .useBeforeEach(p2)
+    .beforeAll(constant({ inline: { a: 1 } }))
+    .beforeEach(constant({ inline: { b: 2 } }))
+    .done()
+  it('test', () => {
+    expect(ctx).toMatchObject(merge(deepData1, deepData2, { inline: { a: 1, b: 2 } }))
   })
 })

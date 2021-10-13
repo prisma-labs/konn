@@ -14,6 +14,8 @@
   - [Providers](#providers)
   - [Standard Providers](#standard-providers)
 - [Reference Docs](#reference-docs)
+  - [Q & A](#q--a)
+    - [How does context merge?](#how-does-context-merge)
 
 <!-- tocstop -->
 
@@ -385,3 +387,28 @@ For in-depth usage details refer to each one's JSDoc.
 ## Reference Docs
 
 [Read reference docs on Paka](http://paka.dev/npm/kont)
+
+### Q & A
+
+#### How does context merge?
+
+Using [Lodash `merge`]().
+
+Example:
+
+```ts
+const ctx = kont()
+  .beforeAll(() => ({ a: { b: { c1: 1, c3: [1] } } }))
+  .beforeEach(() => ({ a: { b: { c2: 2, c3: [2] } } }))
+  .done()
+
+expect(ctx).toMatchObject({
+  a: {
+    b: {
+      c1: 1,
+      c2: 2,
+      c3: [2],
+    },
+  },
+})
+```

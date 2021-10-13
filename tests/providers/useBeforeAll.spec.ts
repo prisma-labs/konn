@@ -1,7 +1,7 @@
-import { constant, noop } from 'lodash'
+import { constant, merge, noop } from 'lodash'
 import { NoContext } from 'src/types'
 import { kont, provider } from '../../src'
-import { data1, Data1, data2 } from '../__data__'
+import { data1, Data1, data2, deepData1, deepData2 } from '../__data__'
 
 describe('can use a noop provider', () => {
   const ctx = kont().useBeforeAll(provider().done()).done()
@@ -69,4 +69,13 @@ describe('after context is partial', () => {
     .done()
   kont().useBeforeAll(p).done()
   it('test', noop)
+})
+
+describe('deep merges', () => {
+  const p1 = provider().before(constant(deepData1)).done()
+  const p2 = provider().before(constant(deepData2)).done()
+  const ctx = kont().useBeforeAll(p1).useBeforeAll(p2).done()
+  it('test', () => {
+    expect(ctx).toMatchObject(merge(deepData1, deepData2))
+  })
 })
