@@ -1,4 +1,3 @@
-import { merge } from 'lodash'
 import ono from '@jsdevtools/ono'
 import { HookNames, jestHookLookup, jestHookToPhase } from './jest'
 import { kontLog } from './log'
@@ -35,7 +34,7 @@ export const runSetup = (params: {
       )
     }
 
-    merge(params.currentContext, contributedContext ?? {})
+    Object.assign(params.currentContext, contributedContext ?? {})
 
     log.trace('did_setup', { contributedContext })
   })

@@ -59,7 +59,6 @@
     "execa": "^5.1.1",
     "floggy": "^0.2.3",
     "fs-jetpack": "^4.1.1",
-    "lodash": "^4.17.21",
     "playwright": "^1.15.1",
     "tslib": "^2.3.1"
   },
@@ -67,7 +66,6 @@
     "@homer0/prettier-plugin-jsdoc": "4.0.5",
     "@prisma-labs/prettier-config": "0.1.0",
     "@types/jest": "27.0.1",
-    "@types/lodash": "^4.14.173",
     "@types/node": "16.9.1",
     "@types/ts-nameof": "4.2.1",
     "@typescript-eslint/eslint-plugin": "4.31.0",
