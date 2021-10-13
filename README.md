@@ -392,7 +392,7 @@ For in-depth usage details refer to each one's JSDoc.
 
 #### How does context merge?
 
-Using [Lodash `merge`]().
+Using [Lodash `merge`](https://lodash.com/docs/4.17.15#merge).
 
 Example:
 
