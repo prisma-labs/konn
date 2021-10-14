@@ -31,6 +31,14 @@ describe('upstream providers can satisfy requirements of downstream providers', 
   it('test', noop)
 })
 
+describe('can use multiple providers in a single call', () => {
+  const p1 = provider<{}, NoContext>().before(noop).done()
+  const p2 = provider<{}, NoContext>().before(noop).done()
+  kont().useBeforeEach(p1, p2).done()
+
+  it('test', noop)
+})
+
 describe('static error if provider context needs not met b/c given data different', () => {
   const p = () =>
     provider<Data1, NoContext>()
