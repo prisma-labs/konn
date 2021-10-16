@@ -3863,13 +3863,6 @@ fsevents@^2.3.2:
   languageName: node
   linkType: hard
 
-"iterall@npm:^1.3.0":
-  version: 1.3.0
-  resolution: "iterall@npm:1.3.0"
-  checksum: c78b99678f8c99be488cca7f33e4acca9b72c1326e050afbaf023f086e55619ee466af0464af94a0cb3f292e60cb5bac53a8fd86bd4249ecad26e09f17bb158b
-  languageName: node
-  linkType: hard
-
 "jest-changed-files@npm:^27.2.5":
   version: 27.2.5
   resolution: "jest-changed-files@npm:27.2.5"
@@ -4679,7 +4672,6 @@ fsevents@^2.3.2:
     jest-watch-typeahead: 1.0.0
     lodash: ^4.17.21
     markdown-toc: ^1.2.0
-    nexus: ^1.1.0
     playwright: ^1.15.2
     prettier: 2.4.1
     ts-jest: 27.0.5
@@ -5105,18 +5097,6 @@ fsevents@^2.3.2:
   version: 1.4.0
   resolution: "natural-compare@npm:1.4.0"
   checksum: 23ad088b08f898fc9b53011d7bb78ec48e79de7627e01ab5518e806033861bef68d5b0cd0e2205c2f36690ac9571ff6bcb05eb777ced2eeda8d4ac5b44592c3d
-  languageName: node
-  linkType: hard
-
-"nexus@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "nexus@npm:1.1.0"
-  dependencies:
-    iterall: ^1.3.0
-    tslib: ^2.0.3
-  peerDependencies:
-    graphql: ^14.5.8 || 15.x
-  checksum: 21826a0ab58388c0c87d31122acf7c819e431243d77ab8ef6b21681c87fcc12b37f3dda3c481f06f30e8d3bdb4cc6e2a903e34d1cbb720a66fbc8dc0948f1051
   languageName: node
   linkType: hard
 
@@ -6621,7 +6601,7 @@ fsevents@^2.3.2:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.0.0, tslib@npm:^2.0.3, tslib@npm:^2.3.1":
+"tslib@npm:^2.0.0, tslib@npm:^2.3.1":
   version: 2.3.1
   resolution: "tslib@npm:2.3.1"
   checksum: de17a98d4614481f7fcb5cd53ffc1aaf8654313be0291e1bfaee4b4bb31a20494b7d218ff2e15017883e8ea9626599b3b0e0229c18383ba9dce89da2adf15cb9

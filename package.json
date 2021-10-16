@@ -61,7 +61,6 @@
     "fs-jetpack": "^4.2.0",
     "graphql": "^15.6.1",
     "lodash": "^4.17.21",
-    "nexus": "^1.1.0",
     "playwright": "^1.15.2",
     "tslib": "^2.3.1"
   },
