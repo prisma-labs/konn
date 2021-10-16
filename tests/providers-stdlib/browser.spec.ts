@@ -1,4 +1,4 @@
-import { kont } from '~/kont'
+import { konn } from '~/konn'
 import { Providers } from '~/Providers'
 
 /**
@@ -6,7 +6,7 @@ import { Providers } from '~/Providers'
  */
 type _Types = [Providers.Browser.Needs, Providers.Browser.Contributes, Providers.Browser.Params]
 
-const ctx = kont().useBeforeAll(Providers.Browser.create()).done()
+const ctx = konn().useBeforeAll(Providers.Browser.create()).done()
 
 it('ctx has access to browser', () => {
   expect(typeof ctx.browser.newPage).toBe('function')

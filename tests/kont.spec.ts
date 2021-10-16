@@ -1,7 +1,9 @@
-import { kont, providers } from '../src'
+import * as n from 'nexus'
+import { konn, providers } from '../src'
+console.log(n)
 
 describe('default context is an empty object', () => {
-  const ctx = kont().done()
+  const ctx = konn().done()
   it('test', () => {
     // @ts-expect-error
     ctx.a

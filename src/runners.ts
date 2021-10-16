@@ -1,7 +1,7 @@
-import { merge } from 'lodash'
 import ono from '@jsdevtools/ono'
+import { merge } from 'lodash'
 import { HookNames, jestHookLookup, jestHookToPhase } from './jest'
-import { kontLog } from './log'
+import { konnLog } from './log'
 import { ContextBase, Setdown, Setup } from './types'
 import { floggySlugify } from './utils'
 
@@ -12,7 +12,7 @@ export const runSetup = (params: {
   setup: Setup<ContextBase, ContextBase>
 }): void => {
   const jestHook = jestHookLookup[params.jestHookName]
-  const log = kontLog.child(floggySlugify(params.providerName))
+  const log = konnLog.child(floggySlugify(params.providerName))
 
   jestHook(async () => {
     log.trace('will_setup', {
@@ -48,7 +48,7 @@ export const runSetdown = (params: {
   setdown: Setdown<ContextBase>
 }): void => {
   const jestHook = jestHookLookup[params.jestHookName]
-  const log = kontLog.child(floggySlugify(params.providerName))
+  const log = konnLog.child(floggySlugify(params.providerName))
 
   jestHook(async () => {
     log.trace('will_setdown', {

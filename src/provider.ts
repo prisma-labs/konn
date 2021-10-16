@@ -5,19 +5,19 @@ import { ContextBase, MergeC, NoContext, Setdown, Setup } from './types'
 
 /**
  * @param contextNeeds  The context that this provider needs.
- * @param kont          This is just a superficial branding to prevent kont providers from being statically
+ * @param konn          This is just a superficial branding to prevent konn providers from being statically
  *                      accepted into inline hook positions.
  *
  *                      For example this should be a static type error:
  *
  *                      ```
- *                      kont().beforeAll(someProvider())
+ *                      konn().beforeAll(someProvider())
  *                      ```
  *
  *                      Correct code is:
  *
  *                      ```
- *                      kont().useBeforeAll(someProvider())
+ *                      konn().useBeforeAll(someProvider())
  *                      ```
  * @remarks The separation of provider from provider builder is an incidental complexity caused by this
  *          TS issue: https://github.com/microsoft/TypeScript/issues/10717
@@ -29,10 +29,10 @@ import { ContextBase, MergeC, NoContext, Setdown, Setup } from './types'
  *          We want a provider to declare its context needs which are contravariant to the context it is
  *          inserted into. That is, the context that surrounds a provider should be a super-type
  *          relationship. However the only way to achieve this is by having the generic passed down from
- *          the kont context to a function parameter, which is not what provider builder is. Hence
+ *          the konn context to a function parameter, which is not what provider builder is. Hence
  *          separated provider and the .done() api to get to it from builder.
  */
-export type Provider<Needs, Contributes> = (contextNeeds: Needs, kont: true) => Contributes
+export type Provider<Needs, Contributes> = (contextNeeds: Needs, konn: true) => Contributes
 
 export type ProviderInternal = {
   use(params: { jestHookName: HookNames.Setup; currentContext: ContextBase }): void

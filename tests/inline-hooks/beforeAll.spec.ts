@@ -1,9 +1,9 @@
 import { constant, merge } from 'lodash'
-import { kont } from '../../src'
+import { konn } from '../../src'
 import { data1, data2, deepData1, deepData2 } from '../__data__'
 
 describe('beforeAll can return nothing which forwards the context', () => {
-  const ctx = kont()
+  const ctx = konn()
     .beforeAll(constant(data1))
     .beforeAll(() => {})
     .done()
@@ -13,7 +13,7 @@ describe('beforeAll can return nothing which forwards the context', () => {
 })
 
 describe('beforeAll can return data which gets deeply merged into the context', () => {
-  const ctx = kont()
+  const ctx = konn()
     .beforeAll(() => data1)
     .beforeAll(() => data2)
     .done()
@@ -24,7 +24,7 @@ describe('beforeAll can return data which gets deeply merged into the context', 
 })
 
 describe('beforeAll can return nothing in the middle of a chain', () => {
-  const ctx = kont()
+  const ctx = konn()
     .beforeAll(() => data1)
     .beforeAll(() => {})
     .beforeAll(() => data2)
@@ -36,7 +36,7 @@ describe('beforeAll can return nothing in the middle of a chain', () => {
 })
 
 describe('default context is an empty object', () => {
-  const ctx = kont()
+  const ctx = konn()
     .beforeAll((ctx) => {
       // @ts-expect-error
       ctx.a
@@ -50,7 +50,7 @@ describe('default context is an empty object', () => {
 })
 
 describe('deep merges', () => {
-  const ctx = kont().beforeAll(constant(deepData1)).beforeAll(constant(deepData2)).done()
+  const ctx = konn().beforeAll(constant(deepData1)).beforeAll(constant(deepData2)).done()
   it('test', () => {
     expect(ctx).toMatchObject(merge(deepData1, deepData2))
   })

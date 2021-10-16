@@ -45,7 +45,7 @@ export interface Kont<BAC1 extends ContextBase, BEC1 extends ContextBase> {
  *   })
  *
  */
-export function kont<C extends ContextBase = NoContext, C2 extends ContextBase = NoContext>(): Kont<C, C2> {
+export function konn<C extends ContextBase = NoContext, C2 extends ContextBase = NoContext>(): Kont<C, C2> {
   const currentContext: ContextBase = {}
 
   const api: Kont<ContextBase, ContextBase> = {
