@@ -4651,9 +4651,9 @@ fsevents@^2.3.2:
   languageName: node
   linkType: hard
 
-"kont@workspace:.":
+"konn@workspace:.":
   version: 0.0.0-use.local
-  resolution: "kont@workspace:."
+  resolution: "konn@workspace:."
   dependencies:
     "@homer0/prettier-plugin-jsdoc": 4.0.5
     "@jsdevtools/ono": ^7.1.3
