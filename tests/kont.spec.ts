@@ -1,5 +1,6 @@
 import * as n from 'nexus'
 import { konn, providers } from '../src'
+
 console.log(n)
 
 describe('default context is an empty object', () => {
