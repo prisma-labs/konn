@@ -1,6 +1,6 @@
-# kont
+# konn
 
-[![trunk](https://github.com/prisma-labs/kont/actions/workflows/trunk.yml/badge.svg)](https://github.com/prisma-labs/kont/actions/workflows/trunk.yml)
+[![trunk](https://github.com/prisma-labs/konn/actions/workflows/trunk.yml/badge.svg)](https://github.com/prisma-labs/konn/actions/workflows/trunk.yml)
 
 <!-- toc -->
 
@@ -22,7 +22,7 @@
 ## Installation
 
 ```
-npm add --dev kont
+npm add --dev konn
 ```
 
 ## Features
@@ -38,9 +38,9 @@ npm add --dev kont
 ## Example
 
 ```ts
-import { kont, providers } from 'kont'
+import { konn, providers } from 'konn'
 
-const ctx = kont()
+const ctx = konn()
   .beforeAll(() => ({ foo: 2 }))
   .useBeforeAll(providers.browser())
   .useBeforeEach(providers.page())
@@ -101,9 +101,9 @@ To this:
 
 ```ts
 import { browser } from './providers/browser'
-import { kont } from 'kont'
+import { konn } from 'konn'
 
-const ctx = kont().useBeforeAll(browser()).done()
+const ctx = konn().useBeforeAll(browser()).done()
 
 test('...', async () => {
   const page = await ctx.browser.newPage()
@@ -123,9 +123,9 @@ How can we improve using Kont? We'll start by using its inline hooks.
 
 ```ts
 import { chromium } from 'playwright'
-import { kont } from 'kont'
+import { konn } from 'konn'
 
-const ctx = kont()
+const ctx = konn()
   .beforeAll(async () => {
     return {
       browser: await chromium.launch(),
@@ -148,7 +148,7 @@ Now we have a clear input/output flow. We also have weaker coupling between the 
 // tests/providers/browser.ts
 
 import { chromium, LaunchOptions } from 'playwright'
-import { kont, provider } from 'kont'
+import { konn, provider } from 'konn'
 
 export const browser = (params: LaunchOptions) =>
   // 1
@@ -169,9 +169,9 @@ export const browser = (params: LaunchOptions) =>
 // tests/foo.test.ts
 
 import { browser } from './providers/browser'
-import { kont, provider } from 'kont'
+import { konn, provider } from 'konn'
 
-const ctx = kont().useBeforeAll(browser()).done()
+const ctx = konn().useBeforeAll(browser()).done()
 //                 3
 
 test('...', async () => {
@@ -189,7 +189,7 @@ Steps Taken:
 This concludes the introduction. There is more to Kont than this. For example, below are some examples of Kont's typesafety. Happy coding!
 
 ```ts
-const ctx = kont()
+const ctx = konn()
   .useBeforeAll(() => ({
     one: 1,
   }))
@@ -209,7 +209,7 @@ it('...', () => {
 ```
 
 ```ts
-kont()
+konn()
   .useBeforeEach(() => ({
     foo: true,
   }))
@@ -231,9 +231,9 @@ It is expected that any sizable test suite is going to be a mix of generic commu
 Context Builder API:
 
 ```ts
-import { kont } from 'kont'
+import { konn } from 'konn'
 
-const ctx = kont()
+const ctx = konn()
   .beforeEach(/* ... */)
   .afterEach(/* ... */)
   .useBeforeAll(/* ... */)
@@ -244,7 +244,7 @@ const ctx = kont()
 Provider Builder API:
 
 ```ts
-import { provider } from 'kont'
+import { provider } from 'konn'
 
 export const foo = () => provider().name('foo').before(/* ... */).after(/* ... */).done()
 ```
@@ -263,14 +263,14 @@ afterAll(/* ... */)
 In Kont the above maps to:
 
 ```ts
-kont().beforeAll(/* ... */).beforeEach(/* ... */).afterEach(/* ... */).afterAll(/* ... */)
+konn().beforeAll(/* ... */).beforeEach(/* ... */).afterEach(/* ... */).afterAll(/* ... */)
 ```
 
 In Kont you must signal an end with `.done()` to access the context that tests will use.
 
 ```ts
-const ctx1 = kont().beforeEach(/* ... */)
-const ctx2 = kont().beforeEach(/* ... */).done()
+const ctx1 = konn().beforeEach(/* ... */)
+const ctx2 = konn().beforeEach(/* ... */).done()
 
 it('...', () => {
   ctx1 // This is still the context builder API!
@@ -281,7 +281,7 @@ it('...', () => {
 In Kont each setup/setdown function receives context, and setup functions _can_ return additional context.
 
 ```ts
-kont()
+konn()
   .beforeAll((ctx) => {
     return {
       a: 1,
@@ -306,7 +306,7 @@ kont()
 Kont statically types that setup functions in before-all hooks cannot see context contributed by setup functions in before-each hooks.
 
 ```ts
-kont()
+konn()
   .beforeEach((ctx) => {
     return {
       b: 2,
@@ -333,7 +333,7 @@ Idiomatic Kont providers do two things:
 > For static typing reasons provider definitions must end with `.done()` which return apparently a plain function. This is a static "lie" to work around [TypeScript variance control limitatons](https://github.com/microsoft/TypeScript/issues/10717). In actuality, at runtime, something else is being returned and in fact `.done()` is basically a no-op function. Its a small price to pay for the type safety you get with Kont.
 
 ```ts
-import { provider } from 'kont'
+import { provider } from 'konn'
 
 export const foo = () => provider().name('foo').before(/*...*/).after(/*...*/).done()
 ```
@@ -341,7 +341,7 @@ export const foo = () => provider().name('foo').before(/*...*/).after(/*...*/).d
 Providers do not control if they will run before all tests, or before each test. This happens instead when providers are used in the context builder API.
 
 ```ts
-kont().useBeforeAll(someProvider()).useBeforeEach(someOtherProvider()).done()
+konn().useBeforeAll(someProvider()).useBeforeEach(someOtherProvider()).done()
 ```
 
 Providers can statically declare what their _upstream context requirements_ are and Kont context builder API ensures that consumers have to honour it or else get a static type error.
@@ -354,10 +354,10 @@ type Needs = {
 const foo = () => provider<Needs>().name('foo').before(/*...*/).after(/*...*/).done()
 
 // ERROR: static type error, no upstream context with `toto: boolean`
-kont().useBeforeAll(foo()).done()
+konn().useBeforeAll(foo()).done()
 
 // Ok!
-kont()
+konn()
   .beforeAll(() => ({ toto: true }))
   .useBeforeAll(foo())
   .done()
@@ -367,7 +367,7 @@ Kont's typings are smart enough to correctly handle lifecycle hook order, so thi
 
 ```ts
 // Error! Foo provider is in an before-all-hook which cannot see the context from before-each hooks
-kont()
+konn()
   .beforeEach(() => ({ toto: true }))
   .useBeforeAll(foo())
   .done()
@@ -393,7 +393,7 @@ Using [Lodash `merge`](https://lodash.com/docs/4.17.15#merge).
 Example:
 
 ```ts
-const ctx = kont()
+const ctx = konn()
   .beforeAll(() => ({ a: { b: { c1: 1, c3: [1] } } }))
   .beforeEach(() => ({ a: { b: { c2: 2, c3: [2] } } }))
   .done()
@@ -411,4 +411,4 @@ expect(ctx).toMatchObject({
 
 ## Reference Docs
 
-[Read reference docs on Paka](http://paka.dev/npm/kont)
+[Read reference docs on Paka](http://paka.dev/npm/konn)

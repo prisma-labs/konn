@@ -1,9 +1,9 @@
 import { constant, noop } from 'lodash'
-import { kont } from '../../src'
+import { konn } from '../../src'
 import { data1, data2 } from '../__data__'
 
 describe('cannot return anything', () => {
-  kont()
+  konn()
     .beforeAll(constant(data1))
     // Statically forbidden
     // @ts-expect-error
@@ -18,7 +18,7 @@ describe('cannot return anything', () => {
 })
 
 describe(`has access to upstream "all" & "each" context with partial typing`, () => {
-  kont()
+  konn()
     .beforeAll(constant(data1))
     .beforeEach(constant(data2))
     .afterEach((ctx) => {
@@ -46,7 +46,7 @@ describe(`has access to upstream "all" & "each" context with partial typing`, ()
 })
 
 describe('can be chained with more "before" hooks but does not have access to them statically', () => {
-  kont()
+  konn()
     .beforeAll(constant(data1))
     .afterEach((ctx) => {
       // data1 from "all"

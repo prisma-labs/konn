@@ -1,5 +1,5 @@
 import { constant, noop } from 'lodash'
-import { kont, provider } from '../src'
+import { konn, provider } from '../src'
 import { data1, Data1 } from './__data__'
 
 it('can create a provider', () => {
@@ -102,7 +102,7 @@ describe('provider has access to provider utils', () => {
         expect(typeof utils.log.info).toEqual('function')
       })
       .done()
-    kont().useBeforeEach(p)
+    konn().useBeforeEach(p)
     it('test', noop)
   })
 
@@ -120,7 +120,7 @@ describe('provider has access to provider utils', () => {
         expect(typeof utils.log.info).toEqual('function')
       })
       .done()
-    kont().useBeforeAll(p)
+    konn().useBeforeAll(p)
     it('test', noop)
   })
 })

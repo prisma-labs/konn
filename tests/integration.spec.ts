@@ -1,17 +1,17 @@
 import { constant, merge, noop } from 'lodash'
 import { Providers } from '~/Providers'
-import { kont, provider } from '../src'
+import { konn, provider } from '../src'
 import { data1, deepData1, deepData2 } from './__data__'
 
 describe('static type error when provier passed to inline hooks', () => {
   // @ts-expect-error
-  kont().beforeAll(Providers.Dir.create())
+  konn().beforeAll(Providers.Dir.create())
   // This test is skipped since if it runs it will lead to a runtime error given the above bad usage.
   it.skip('test', noop)
 })
 
 describe('beforeEach context is available to downstream beforeEach & test but NOT beforeAll', () => {
-  const ctx = kont()
+  const ctx = konn()
     .beforeEach(constant(data1))
     .beforeEach((ctx) => ({ b2: ctx.a.b }))
     // @ts-expect-error
@@ -25,7 +25,7 @@ describe('beforeEach context is available to downstream beforeEach & test but NO
 })
 
 describe('beforeAll context is available to downstream beforeAll & beforeEach & test', () => {
-  const ctx = kont()
+  const ctx = konn()
     .beforeAll(constant(data1))
     .beforeAll((ctx) => ({ b1: ctx.a.b }))
     .beforeEach((ctx) => ({ b2: ctx.a.b }))
@@ -40,7 +40,7 @@ describe('beforeAll context is available to downstream beforeAll & beforeEach & 
 describe('deep merges', () => {
   const p1 = provider().before(constant(deepData1)).done()
   const p2 = provider().before(constant(deepData2)).done()
-  const ctx = kont()
+  const ctx = konn()
     .useBeforeAll(p1)
     .useBeforeEach(p2)
     .beforeAll(constant({ inline: { a: 1 } }))

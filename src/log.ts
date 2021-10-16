@@ -1,3 +1,3 @@
 import { log } from 'floggy'
 
-export const kontLog = log.child('kont')
+export const konnLog = log.child('konn')

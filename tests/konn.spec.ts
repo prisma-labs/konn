@@ -1,7 +1,7 @@
-import { kont, providers } from '../src'
+import { konn, providers } from '../src'
 
 describe('default context is an empty object', () => {
-  const ctx = kont().done()
+  const ctx = konn().done()
   it('test', () => {
     // @ts-expect-error
     ctx.a

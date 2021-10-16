@@ -1,10 +1,10 @@
 import { constant, merge, noop } from 'lodash'
 import { NoContext } from 'src/types'
-import { kont, provider } from '../../src'
+import { konn, provider } from '../../src'
 import { data1, Data1, data2, deepData1, deepData2 } from '../__data__'
 
 describe('can use a noop provider', () => {
-  const ctx = kont().useBeforeAll(provider().done()).done()
+  const ctx = konn().useBeforeAll(provider().done()).done()
   it('test', () => {
     // @ts-expect-error
     ctx.a
@@ -19,14 +19,14 @@ describe('can use provider explicitly expecting data', () => {
         expect(ctx.a.b).toEqual(2)
       })
       .done()
-  kont().beforeAll(constant(data1)).useBeforeAll(p())
+  konn().beforeAll(constant(data1)).useBeforeAll(p())
   it('test', noop)
 })
 
 describe('upstream providers can satisfy requirements of downstream providers', () => {
   const p1 = provider<{}, Data1>().before(constant(data1)).done()
   const p2 = provider<Data1, {}>().before(noop).done()
-  kont().useBeforeAll(p1).useBeforeAll(p2)
+  konn().useBeforeAll(p1).useBeforeAll(p2)
 
   it('test', noop)
 })
@@ -39,7 +39,7 @@ describe('static error if provider context needs not met b/c given data differen
         expect(ctx.a).toEqual(undefined)
       })
       .done()
-  kont()
+  konn()
     .beforeAll(constant(data2))
     // @ts-expect-error
     .useBeforeAll(p())
@@ -53,7 +53,7 @@ describe('static error if provider context needs not met b/c no data', () => {
     })
     .done()
   // @ts-expect-error
-  kont().useBeforeAll(p)
+  konn().useBeforeAll(p)
   it('test', noop)
 })
 
@@ -67,14 +67,14 @@ describe('after context is partial', () => {
       ctx.a.b.toFixed()
     })
     .done()
-  kont().useBeforeAll(p).done()
+  konn().useBeforeAll(p).done()
   it('test', noop)
 })
 
 describe('deep merges', () => {
   const p1 = provider().before(constant(deepData1)).done()
   const p2 = provider().before(constant(deepData2)).done()
-  const ctx = kont().useBeforeAll(p1).useBeforeAll(p2).done()
+  const ctx = konn().useBeforeAll(p1).useBeforeAll(p2).done()
   it('test', () => {
     expect(ctx).toMatchObject(merge(deepData1, deepData2))
   })

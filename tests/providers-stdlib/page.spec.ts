@@ -1,5 +1,5 @@
 import { firefox } from 'playwright'
-import { kont } from '~/kont'
+import { konn } from '~/konn'
 import { Providers } from '~/Providers'
 
 jest.setTimeout(60_000)
@@ -10,7 +10,7 @@ jest.setTimeout(60_000)
 type _Types = [Providers.Page.Needs, Providers.Page.Contributes, Providers.Browser.Params]
 
 describe(`when browser not in context, chromium browser created and used`, () => {
-  const ctx = kont().useBeforeAll(Providers.Page.create()).done()
+  const ctx = konn().useBeforeAll(Providers.Page.create()).done()
 
   it(`test`, async () => {
     await ctx.page.goto(`https://prisma.io`)
@@ -21,7 +21,7 @@ describe(`when browser not in context, chromium browser created and used`, () =>
 })
 
 describe(`when browser in context, is used`, () => {
-  const ctx = kont()
+  const ctx = konn()
     .useBeforeAll(Providers.Browser.create({ browser: firefox }))
     .useBeforeAll(Providers.Page.create())
     .done()

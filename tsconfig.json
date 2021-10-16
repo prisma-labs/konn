@@ -33,7 +33,7 @@
     // Other
     // Only enable this for applications.
     // Packages doing this force their consumers to.
-    // "esModuleInterop": true,
+    "esModuleInterop": true,
 
     // Transformer Plugins made possible by https://github.com/nonara/ts-patch
     "plugins": [

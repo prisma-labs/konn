@@ -1,4 +1,4 @@
-import { kont } from '~/kont'
+import { konn } from '~/konn'
 import { Providers } from '~/Providers'
 
 /**
@@ -6,7 +6,7 @@ import { Providers } from '~/Providers'
  */
 type _Types = [Providers.Run.Needs, Providers.Run.Contributes, Providers.Run.Params]
 
-const ctx = kont().useBeforeAll(Providers.Run.create()).done()
+const ctx = konn().useBeforeAll(Providers.Run.create()).done()
 
 it('ctx has access to run commands', () => {
   expect(ctx.run('yarn --version')).toMatchObject({
