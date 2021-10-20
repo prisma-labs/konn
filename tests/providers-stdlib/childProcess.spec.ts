@@ -2,6 +2,8 @@ import * as Fs from 'fs-jetpack'
 import { konn, providers } from '~/index'
 import { Providers } from '~/Providers'
 
+jest.setTimeout(20_000)
+
 it('exports shorthand access', () => {
   expect(typeof providers.childProcess).toEqual('function')
 })
