@@ -1,4 +1,5 @@
 export * from './Browser'
+export * from './ChildProcess'
 export * from './Dir'
 export * from './Page'
 export * from './Run'

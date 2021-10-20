@@ -384,6 +384,50 @@ For in-depth usage details refer to each one's JSDoc.
 - `Page` Get a [Playwright](https://playwright.dev/) [page](https://playwright.dev/docs/api/class-page).
 - `Run` Handy child-process methods powered by [Execa](https://github.com/sindresorhus/execa). If `Dir` in upstream context then used for default [CWD](https://github.com/sindresorhus/execa#cwd).
 
+### Reuse & Extension
+
+```ts
+const ctx = konn().useBeforeAll(a).useBeforeAll(b).useBeforeAll(c)
+
+describe('Area 1', () => {
+  const ctx2 = ctx.useBeforeAll(foo).done()
+  it('thing 1', () => {})
+  it('thing 2', () => {})
+})
+
+describe('Area 2', () => {
+  const ctx2 = ctx.useBeforeAll(qux).done()
+  it('thing 1', () => {})
+  it('thing 2', () => {})
+})
+```
+
+```ts
+// file-1.ts
+export const abc = konn().useBeforeAll(a).useBeforeAll(b).useBeforeAll(c)
+
+// file-2.ts
+export const efg = konn().useBeforeAll(e).useBeforeAll(f).useBeforeAll(g)
+
+// file-3.ts
+import { abc } from './file-1.ts'
+import { efg } from './file-1.ts'
+
+const ctx = konn().use(abc).use(efg).done()
+
+describe('Area 1', () => {
+  const ctx2 = ctx.useBeforeAll(foo).done()
+  it('thing 1', () => {})
+  it('thing 2', () => {})
+})
+
+describe('Area 2', () => {
+  const ctx2 = ctx.useBeforeAll(qux).done()
+  it('thing 1', () => {})
+  it('thing 2', () => {})
+})
+```
+
 ## Q & A
 
 #### How does context merge?
