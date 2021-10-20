@@ -34,6 +34,7 @@ npm add --dev konn
   - `Browser` Get a [Playwright](https://playwright.dev/) [browser](https://playwright.dev/docs/api/class-browser).
   - `Page` Get a [Playwright](https://playwright.dev/) [page](https://playwright.dev/docs/api/class-page).
   - `Run` Handy child-process methods powered by [Execa](https://github.com/sindresorhus/execa). If `Dir` in upstream context then used for default [CWD](https://github.com/sindresorhus/execa#cwd).
+  - `ChildProcess` Easily run a child-process over the test lifecycle, e.g. a Node.js HTTP server in another process for your tests.
 
 ## Example
 
@@ -383,6 +384,7 @@ For in-depth usage details refer to each one's JSDoc.
 - `Browser` Get a [Playwright](https://playwright.dev/) [browser](https://playwright.dev/docs/api/class-browser).
 - `Page` Get a [Playwright](https://playwright.dev/) [page](https://playwright.dev/docs/api/class-page).
 - `Run` Handy child-process methods powered by [Execa](https://github.com/sindresorhus/execa). If `Dir` in upstream context then used for default [CWD](https://github.com/sindresorhus/execa#cwd).
+- `ChildProcess` Easily run a child-process over the test lifecycle, e.g. a Node.js HTTP server in another process for your tests.
 
 ### Reuse & Extension
 
