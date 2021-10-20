@@ -3,11 +3,11 @@ import { konn, providers } from '~/index'
 import { Providers } from '~/Providers'
 
 it('exports shorthand access', () => {
-  expect(typeof providers.childProcess).toEqual('Function')
+  expect(typeof providers.childProcess).toEqual('function')
 })
 
 it('exports longhand access', () => {
-  expect(typeof Providers.ChildProcess.create).toEqual('Function')
+  expect(typeof Providers.ChildProcess.create).toEqual('function')
 })
 
 /**
