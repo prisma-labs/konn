@@ -58,12 +58,20 @@ export const create = (params: Params) =>
         childProcess.kill('SIGTERM', {
           forceKillAfterTimeout: 2_000,
         })
-        await childProcess.once('close', (code, signal) => {
-          utils.log.trace('process_close', {
-            code,
-            signal,
-          })
-        })
+        await Promise.race([
+          new Promise((res) => setTimeout(res, 3_000)),
+          new Promise((_, rej) => {
+            void childProcess.once('error', (err) => {
+              rej(err)
+            })
+          }),
+          childProcess.once('close', (code, signal) => {
+            utils.log.trace('process_close', {
+              code,
+              signal,
+            })
+          }),
+        ])
       }
     })
     .done()
