@@ -107,34 +107,35 @@ export const create = (params: Params) =>
     .after(async (ctx, utils) => {
       if (ctx.childProcess) {
         const childProcess = ctx.childProcess
-        childProcess.kill('SIGTERM', {
-          forceKillAfterTimeout: 2_000,
-        })
+        // childProcess.kill('SIGTERM', {
+        //   forceKillAfterTimeout: 2_000,
+        // })
         childProcess.cancel()
+        await childProcess
 
-        const result = await Promise.race([
-          timeout(3_000),
-          childProcess,
-          // childProcess.once('exit', (code, signal) => {
-          //   utils.log.trace('process_close', {
-          //     code,
-          //     signal,
-          //   })
-          // }),
-          // childProcess.once('close', (code, signal) => {
-          //   utils.log.trace('process_close', {
-          //     code,
-          //     signal,
-          //   })
-          // }),
-        ])
+        // const result = await Promise.race([
+        //   timeout(3_000),
+        //   childProcess,
+        //   // childProcess.once('exit', (code, signal) => {
+        //   //   utils.log.trace('process_close', {
+        //   //     code,
+        //   //     signal,
+        //   //   })
+        //   // }),
+        //   // childProcess.once('close', (code, signal) => {
+        //   //   utils.log.trace('process_close', {
+        //   //     code,
+        //   //     signal,
+        //   //   })
+        //   // }),
+        // ])
 
-        if ('timeout' in result && result.timeout) {
-          utils.log.warn('child_process_timeout_exit', {
-            message: `Will use unref on child process which may leave an orphan child process running.`,
-          })
-          childProcess.unref()
-        }
+        // if ('timeout' in result && result.timeout) {
+        //   utils.log.warn('child_process_timeout_exit', {
+        //     message: `Will use unref on child process which may leave an orphan child process running.`,
+        //   })
+        //   childProcess.unref()
+        // }
       }
     })
     .done()
