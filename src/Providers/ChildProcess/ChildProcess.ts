@@ -121,7 +121,10 @@ export const create = (params: Params) =>
         ])
 
         if ('timeout' in result && result.timeout) {
-          utils.log.warn('child_process_timeout_exit')
+          utils.log.warn('child_process_timeout_exit', {
+            message: `Will use unref on child process which may leave an orphan child process running.`,
+          })
+          childProcess.unref()
         }
       }
     })
