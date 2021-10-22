@@ -57,6 +57,8 @@ export const create = (params: Params) =>
         } as NodeJS.ProcessEnv,
       })
 
+      childProcess.unref()
+
       void childProcess.on('error', (error) => {
         throw ono(error, `Child process encountered an error`)
       })
@@ -70,7 +72,7 @@ export const create = (params: Params) =>
         const limit = 10_000
         const start = params.start
         const result = await Promise.race([
-          timeout(limit),
+          // timeout(limit),
           new Promise<null>((res) => {
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             childProcess.stdout!.on('data', (buffer) => {
@@ -85,11 +87,11 @@ export const create = (params: Params) =>
           }),
         ])
 
-        if (result?.timeout) {
-          throw new Error(
-            `Timed out (${limit} ms) while waiting for child process start signal ${String(start)}`
-          )
-        }
+        // if (result?.timeout) {
+        //   throw new Error(
+        //     `Timed out (${limit} ms) while waiting for child process start signal ${String(start)}`
+        //   )
+        // }
       }
 
       return {
@@ -104,14 +106,14 @@ export const create = (params: Params) =>
         })
 
         const result = await Promise.race([
-          timeout(3_000),
+          // timeout(3_000),
           childProcess,
-          childProcess.once('exit', (code, signal) => {
-            utils.log.trace('process_close', {
-              code,
-              signal,
-            })
-          }),
+          // childProcess.once('exit', (code, signal) => {
+          //   utils.log.trace('process_close', {
+          //     code,
+          //     signal,
+          //   })
+          // }),
           childProcess.once('close', (code, signal) => {
             utils.log.trace('process_close', {
               code,
@@ -120,12 +122,12 @@ export const create = (params: Params) =>
           }),
         ])
 
-        if ('timeout' in result && result.timeout) {
-          utils.log.warn('child_process_timeout_exit', {
-            message: `Will use unref on child process which may leave an orphan child process running.`,
-          })
-          childProcess.unref()
-        }
+        // if ('timeout' in result && result.timeout) {
+        //   utils.log.warn('child_process_timeout_exit', {
+        //     message: `Will use unref on child process which may leave an orphan child process running.`,
+        //   })
+        //   childProcess.unref()
+        // }
       }
     })
     .done()
