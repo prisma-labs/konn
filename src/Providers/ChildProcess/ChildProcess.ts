@@ -1,7 +1,7 @@
-import ono from '@jsdevtools/ono'
 import * as Execa from 'execa'
 import { provider } from '~/provider'
 import { NeedsNothing } from '~/types'
+import ono from '@jsdevtools/ono'
 
 export type Params = {
   /**
