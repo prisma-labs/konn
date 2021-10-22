@@ -1,3 +1,4 @@
+import ono from '@jsdevtools/ono'
 import * as Execa from 'execa'
 import { provider } from '~/provider'
 import { NeedsNothing } from '~/types'
@@ -8,6 +9,9 @@ export type Params = {
    */
   command: string
   start?: RegExp
+  attachTerminal?: boolean
+  debug?: string
+  env?: Record<string, string>
 }
 
 export type Needs = NeedsNothing
@@ -31,21 +35,61 @@ export const create = (params: Params) =>
   provider<Needs, Contributes>()
     .name('childProcess')
     .before(async (_, utils) => {
-      const childProcess = Execa.command(params.command)
+      if (process.env.CI) {
+        params.attachTerminal = params.attachTerminal ?? Boolean(process.env.CI)
+      }
+
+      const childProcess = Execa.command(params.command, {
+        env: {
+          ...(params.debug
+            ? {
+                DEBUG: params.debug,
+                LOG_PRETTY: 'true',
+              }
+            : {}),
+          ...(params.attachTerminal
+            ? {
+                LOG_PRETTY: 'true',
+              }
+            : {}),
+
+          ...params.env,
+        } as NodeJS.ProcessEnv,
+      })
+
+      void childProcess.on('error', (error) => {
+        throw ono(error, `Child process encountered an error`)
+      })
+
+      if (params.attachTerminal || params.debug) {
+        childProcess.stdout?.pipe(process.stdout)
+        childProcess.stderr?.pipe(process.stderr)
+      }
 
       if (params.start) {
+        const limit = 4_000
         const start = params.start
-        await new Promise((res) => {
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          childProcess.stdout!.on('data', (buffer) => {
-            utils.log.trace('process_data', {
-              value: String(buffer).trim(),
+        const result = await Promise.race([
+          timeout(limit),
+          new Promise<null>((res) => {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            childProcess.stdout!.on('data', (buffer) => {
+              utils.log.trace('process_data', {
+                value: String(buffer),
+              })
+
+              const match = start.exec(String(buffer))
+
+              if (match) res(null)
             })
-            if (start.exec(String(buffer).trim())) {
-              res(null)
-            }
-          })
-        })
+          }),
+        ])
+
+        if (result?.timeout) {
+          throw new Error(
+            `Timed out (${limit} ms) while waiting for child process start signal ${String(start)}`
+          )
+        }
       }
 
       return {
@@ -82,3 +126,14 @@ export const create = (params: Params) =>
       }
     })
     .done()
+const timeout = (limit: number) =>
+  new Promise<{ timeout: true }>((res) => {
+    const timeout = setTimeout(
+      () =>
+        res({
+          timeout: true,
+        }),
+      limit
+    )
+    timeout.unref()
+  })
