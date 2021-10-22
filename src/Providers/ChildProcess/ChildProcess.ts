@@ -1,7 +1,7 @@
+import ono from '@jsdevtools/ono'
 import * as Execa from 'execa'
 import { provider } from '~/provider'
 import { NeedsNothing } from '~/types'
-import ono from '@jsdevtools/ono'
 
 export type Params = {
   /**
@@ -103,8 +103,15 @@ export const create = (params: Params) =>
           forceKillAfterTimeout: 2_000,
         })
 
-        await Promise.race([
+        const result = await Promise.race([
           timeout(3_000),
+          childProcess,
+          childProcess.once('exit', (code, signal) => {
+            utils.log.trace('process_close', {
+              code,
+              signal,
+            })
+          }),
           childProcess.once('close', (code, signal) => {
             utils.log.trace('process_close', {
               code,
@@ -112,6 +119,10 @@ export const create = (params: Params) =>
             })
           }),
         ])
+
+        if ('timeout' in result && result.timeout) {
+          utils.log.warn('child_process_timeout_exit')
+        }
       }
     })
     .done()
