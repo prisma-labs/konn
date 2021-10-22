@@ -1,4 +1,3 @@
-import ono from '@jsdevtools/ono'
 import * as Execa from 'execa'
 import { provider } from '~/provider'
 import { NeedsNothing } from '~/types'
@@ -59,9 +58,9 @@ export const create = (params: Params) =>
 
       childProcess.unref()
 
-      void childProcess.on('error', (error) => {
-        throw ono(error, `Child process encountered an error`)
-      })
+      // void childProcess.on('error', (error) => {
+      //   throw ono(error, `Child process encountered an error`)
+      // })
 
       if (params.attachTerminal || params.debug) {
         childProcess.stdout?.pipe(process.stdout)
@@ -71,19 +70,26 @@ export const create = (params: Params) =>
       if (params.start) {
         const limit = 10_000
         const start = params.start
+
         const result = await Promise.race([
           // timeout(limit),
           new Promise<null>((res) => {
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            childProcess.stdout!.on('data', (buffer) => {
+            //eslint-disable-next-line
+            function isReady(buffer: any) {
               utils.log.trace('process_data', {
                 value: String(buffer),
               })
 
               const match = start.exec(String(buffer))
 
-              if (match) res(null)
-            })
+              if (match) {
+                res(null)
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                childProcess.stdout!.off('data', isReady)
+              }
+            }
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            childProcess.stdout!.on('data', isReady)
           }),
         ])
 
@@ -106,7 +112,7 @@ export const create = (params: Params) =>
         })
 
         const result = await Promise.race([
-          // timeout(3_000),
+          timeout(3_000),
           childProcess,
           // childProcess.once('exit', (code, signal) => {
           //   utils.log.trace('process_close', {
@@ -114,12 +120,12 @@ export const create = (params: Params) =>
           //     signal,
           //   })
           // }),
-          childProcess.once('close', (code, signal) => {
-            utils.log.trace('process_close', {
-              code,
-              signal,
-            })
-          }),
+          // childProcess.once('close', (code, signal) => {
+          //   utils.log.trace('process_close', {
+          //     code,
+          //     signal,
+          //   })
+          // }),
         ])
 
         // if ('timeout' in result && result.timeout) {
