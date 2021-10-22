@@ -27,6 +27,7 @@ describe('__fixture_process__', () => {
       Providers.ChildProcess.create({
         command: `yarn ts-node ./tests/__fixture_process__.ts`,
         start: /ready/,
+        attachTerminal: false,
       })
     )
     .done()
@@ -47,6 +48,7 @@ describe.skip('__fixture_process_bad_exit__', () => {
       Providers.ChildProcess.create({
         command: `yarn ts-node ./tests/__fixture_process_bad_exit__.ts`,
         start: /ready/,
+        attachTerminal: false,
       })
     )
     .done()
