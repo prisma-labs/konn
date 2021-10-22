@@ -110,6 +110,7 @@ export const create = (params: Params) =>
         childProcess.kill('SIGTERM', {
           forceKillAfterTimeout: 2_000,
         })
+        childProcess.cancel()
 
         const result = await Promise.race([
           timeout(3_000),
