@@ -24,7 +24,7 @@ type _Types = [
 describe('__fixture_process__', () => {
   const ctx = konn()
     .useBeforeAll(
-      Providers.ChildProcess.create({
+      providers.childProcess({
         command: `yarn ts-node ./tests/__fixture_process__.ts`,
         start: /ready/,
         attachTerminal: false,
@@ -32,7 +32,7 @@ describe('__fixture_process__', () => {
     )
     .done()
 
-  it('ctx has access to browser', () => {
+  it('runs while fixture process is running', () => {
     const filePath = './tests/fixture-process-proof-file.txt'
     expect(Fs.exists(filePath)).toBeTruthy()
     Fs.remove(filePath)
