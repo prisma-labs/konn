@@ -112,7 +112,7 @@ export const create = (params: Params) =>
         // })
         childProcess.cancel()
         // await childProcess
-        void timeout(3_000)
+        await timeout(3_000)
 
         // const result = await Promise.race([
         //   timeout(3_000),
