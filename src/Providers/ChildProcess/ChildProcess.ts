@@ -110,6 +110,7 @@ export const create = (params: Params) =>
         //   forceKillAfterTimeout: 2_000,
         // })
         childProcess.cancel()
+        await new Promise<void>((resolve) => setTimeout(() => resolve(), 500))
         // const to = timeout(3_000)
         // to.cancel()
 
