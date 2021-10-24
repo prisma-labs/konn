@@ -25,9 +25,10 @@ describe('__fixture_process__', () => {
   const ctx = konn()
     .useBeforeAll(
       providers.childProcess({
-        command: `yarn ts-node ./tests/__fixture_process__.ts`,
+        command: `yarn`,
+        args: [`ts-node`, `./tests/__fixture_process__.ts`],
         start: /ready/,
-        attachTerminal: false,
+        debug: '*',
       })
     )
     .done()
@@ -42,16 +43,16 @@ describe('__fixture_process__', () => {
 /**
  * This should fail, but there is no way to tell jest that a hook failure is expected.
  */
-describe.skip('__fixture_process_bad_exit__', () => {
-  const ctx = konn()
-    .useBeforeAll(
-      Providers.ChildProcess.create({
-        command: `yarn ts-node ./tests/__fixture_process_bad_exit__.ts`,
-        start: /ready/,
-        attachTerminal: false,
-      })
-    )
-    .done()
+// describe.skip('__fixture_process_bad_exit__', () => {
+//   const ctx = konn()
+//     .useBeforeAll(
+//       Providers.ChildProcess.create({
+//         command: `yarn ts-node ./tests/__fixture_process_bad_exit__.ts`,
+//         start: /ready/,
+//         attachTerminal: false,
+//       })
+//     )
+//     .done()
 
-  it('fails', () => {})
-})
+//   it('fails', () => {})
+// })

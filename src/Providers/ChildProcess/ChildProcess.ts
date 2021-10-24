@@ -1,4 +1,4 @@
-import * as Execa from 'execa'
+import { ChildProcessWithoutNullStreams, spawn } from 'child_process'
 import { provider } from '~/provider'
 import { NeedsNothing } from '~/types'
 
@@ -7,6 +7,7 @@ export type Params = {
    * The command to run to spawn the child process. This value will be passed to [`Execa.command`]()
    */
   command: string
+  args: string[]
   start?: RegExp
   attachTerminal?: boolean
   debug?: string
@@ -16,7 +17,8 @@ export type Params = {
 export type Needs = NeedsNothing
 
 export type Contributes = {
-  childProcess: Execa.ExecaChildProcess
+  // childProcess: Execa.ExecaChildProcess
+  childProcess: ChildProcessWithoutNullStreams
 }
 
 /**
@@ -38,9 +40,11 @@ export const create = (params: Params) =>
         params.attachTerminal = params.attachTerminal ?? Boolean(process.env.CI)
       }
 
-      const childProcess = Execa.command(params.command, {
+      const childProcess = spawn(params.command, params.args, {
+        shell: true,
         windowsHide: false,
         env: {
+          ...process.env,
           ...(params.debug
             ? {
                 DEBUG: params.debug,
@@ -106,10 +110,11 @@ export const create = (params: Params) =>
     .after(async (ctx, utils) => {
       if (ctx.childProcess) {
         const childProcess = ctx.childProcess
+        childProcess.kill('SIGTERM')
         // childProcess.kill('SIGTERM', {
         //   forceKillAfterTimeout: 2_000,
         // })
-        childProcess.cancel()
+        // childProcess.cancel()
         await new Promise<void>((resolve) => setTimeout(() => resolve(), 500))
         // const to = timeout(3_000)
         // to.cancel()
