@@ -39,6 +39,7 @@ export const create = (params: Params) =>
       }
 
       const childProcess = Execa.command(params.command, {
+        // windowsHide: false,
         env: {
           ...(params.debug
             ? {
@@ -112,7 +113,8 @@ export const create = (params: Params) =>
         // })
         childProcess.cancel()
         // await childProcess
-        await timeout(3_000)
+        const to = timeout(3_000)
+        to.cancel()
 
         // const result = await Promise.race([
         //   timeout(3_000),
@@ -141,14 +143,19 @@ export const create = (params: Params) =>
     })
     .done()
 
-const timeout = (limit: number) =>
-  new Promise<{ timeout: true }>((res) => {
-    const timeout = setTimeout(
+const timeout = (limit: number): Promise<void> & { cancel(): void } => {
+  let timeout: NodeJS.Timeout | undefined
+  const p = new Promise<{ timeout: true }>((res) => {
+    timeout = setTimeout(
       () =>
         res({
           timeout: true,
         }),
       limit
     )
-    timeout.unref()
   })
+  //eslint-disable-next-line
+  ;(p as any).cancel = () => timeout && clearTimeout(timeout)
+  //eslint-disable-next-line
+  return p as any
+}
