@@ -57,8 +57,6 @@ export const create = (params: Params) =>
         } as NodeJS.ProcessEnv,
       })
 
-      childProcess.unref()
-
       // void childProcess.on('error', (error) => {
       //   throw ono(error, `Child process encountered an error`)
       // })
@@ -112,8 +110,8 @@ export const create = (params: Params) =>
         //   forceKillAfterTimeout: 2_000,
         // })
         childProcess.cancel()
-        const to = timeout(3_000)
-        to.cancel()
+        // const to = timeout(3_000)
+        // to.cancel()
 
         // const result = await Promise.race([
         //   timeout(3_000),
