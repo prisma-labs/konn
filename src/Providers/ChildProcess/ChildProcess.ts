@@ -143,10 +143,22 @@ export const create = (params: Params) =>
     })
     .done()
 
-const timeout = (limit: number): Promise<void> & { cancel(): void } => {
-  let timeout: NodeJS.Timeout | undefined
-  const p = new Promise<{ timeout: true }>((res) => {
-    timeout = setTimeout(
+const timeout = (limit: number): Promise<{ timeout: boolean }> & { cancel(): void } => {
+  let timeout_: NodeJS.Timeout | undefined
+  let res_:
+    | undefined
+    | ((
+        value:
+          | {
+              timeout: boolean
+            }
+          | PromiseLike<{
+              timeout: boolean
+            }>
+      ) => void)
+  const p = new Promise<{ timeout: boolean }>((res) => {
+    res_ = res
+    timeout_ = setTimeout(
       () =>
         res({
           timeout: true,
@@ -155,7 +167,10 @@ const timeout = (limit: number): Promise<void> & { cancel(): void } => {
     )
   })
   //eslint-disable-next-line
-  ;(p as any).cancel = () => timeout && clearTimeout(timeout)
+  ;(p as any).cancel = () => {
+    if (timeout_) clearTimeout(timeout_)
+    if (res_) res_({ timeout: false })
+  }
   //eslint-disable-next-line
   return p as any
 }
