@@ -39,7 +39,7 @@ export const create = (params: Params) =>
       }
 
       const childProcess = Execa.command(params.command, {
-        // windowsHide: false,
+        windowsHide: false,
         env: {
           ...(params.debug
             ? {
