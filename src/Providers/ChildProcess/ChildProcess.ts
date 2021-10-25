@@ -1,13 +1,14 @@
-import { ChildProcessWithoutNullStreams, spawn } from 'child_process'
+import ono from '@jsdevtools/ono'
+import * as Execa from 'execa'
 import { provider } from '~/provider'
 import { NeedsNothing } from '~/types'
+import { timeout } from '~/utils'
 
 export type Params = {
   /**
    * The command to run to spawn the child process. This value will be passed to [`Execa.command`]()
    */
   command: string
-  args: string[]
   start?: RegExp
   attachTerminal?: boolean
   debug?: string
@@ -17,8 +18,7 @@ export type Params = {
 export type Needs = NeedsNothing
 
 export type Contributes = {
-  // childProcess: Execa.ExecaChildProcess
-  childProcess: ChildProcessWithoutNullStreams
+  childProcess: Execa.ExecaChildProcess
 }
 
 /**
@@ -40,11 +40,9 @@ export const create = (params: Params) =>
         params.attachTerminal = params.attachTerminal ?? Boolean(process.env.CI)
       }
 
-      const childProcess = spawn(params.command, params.args, {
-        shell: true,
-        windowsHide: false,
+      const childProcess = Execa.command(params.command, {
+        preferLocal: true,
         env: {
-          ...process.env,
           ...(params.debug
             ? {
                 DEBUG: params.debug,
@@ -61,21 +59,33 @@ export const create = (params: Params) =>
         } as NodeJS.ProcessEnv,
       })
 
-      // void childProcess.on('error', (error) => {
-      //   throw ono(error, `Child process encountered an error`)
-      // })
+      //eslint-disable-next-line
+      ;(childProcess as any).stdioHistory = [] as string[]
 
       if (params.attachTerminal || params.debug) {
         childProcess.stdout?.pipe(process.stdout)
         childProcess.stderr?.pipe(process.stderr)
       }
 
+      //eslint-disable-next-line
+      childProcess.stdout!.on('data', (data) => {
+        //@ts-expect-error internal field
+        //eslint-disable-next-line
+        childProcess.stdioHistory.push(String(data).trim())
+      })
+      //eslint-disable-next-line
+      childProcess.stderr!.on('data', (data) => {
+        //@ts-expect-error internal field
+        //eslint-disable-next-line
+        childProcess.stdioHistory.push(String(data).trim())
+      })
+
       if (params.start) {
         const limit = 10_000
         const start = params.start
 
         const result = await Promise.race([
-          // timeout(limit),
+          timeout(limit, { unref: true }),
           new Promise<null>((res) => {
             //eslint-disable-next-line
             function isReady(buffer: any) {
@@ -96,11 +106,11 @@ export const create = (params: Params) =>
           }),
         ])
 
-        // if (result?.timeout) {
-        //   throw new Error(
-        //     `Timed out (${limit} ms) while waiting for child process start signal ${String(start)}`
-        //   )
-        // }
+        if (result?.timeout) {
+          throw new Error(
+            `Timed out (${limit} ms) while waiting for child process start signal ${String(start)}`
+          )
+        }
       }
 
       return {
@@ -109,71 +119,22 @@ export const create = (params: Params) =>
     })
     .after(async (ctx, utils) => {
       if (ctx.childProcess) {
-        const childProcess = ctx.childProcess
-        childProcess.kill('SIGTERM')
-        // childProcess.kill('SIGTERM', {
-        //   forceKillAfterTimeout: 2_000,
-        // })
-        // childProcess.cancel()
-        await new Promise<void>((resolve) => setTimeout(() => resolve(), 500))
-        // const to = timeout(3_000)
-        // to.cancel()
-
-        // const result = await Promise.race([
-        //   timeout(3_000),
-        //   childProcess,
-        //   //   // childProcess.once('exit', (code, signal) => {
-        //   //   //   utils.log.trace('process_close', {
-        //   //   //     code,
-        //   //   //     signal,
-        //   //   //   })
-        //   //   // }),
-        //   //   // childProcess.once('close', (code, signal) => {
-        //   //   //   utils.log.trace('process_close', {
-        //   //   //     code,
-        //   //   //     signal,
-        //   //   //   })
-        //   //   // }),
-        // ])
-
-        // if ('timeout' in result && result.timeout) {
-        //   utils.log.warn('child_process_timeout_exit', {
-        //     // message: `Will use unref on child process which may leave an orphan child process running.`,
-        //   })
-        //   // childProcess.unref()
-        // }
+        ctx.childProcess.kill('SIGTERM', {
+          forceKillAfterTimeout: 2_000,
+        })
+        try {
+          await ctx.childProcess
+        } catch (error) {
+          const e = error as Execa.ExecaError
+          if (e.exitCode !== 0) {
+            // eslint-disable-next-line
+            const history: string = (ctx.childProcess as any).stdioHistory.join('\n')
+            throw ono(
+              e,
+              `The child process exited with non-zero exit code: ${e.exitCode}. Its stdio was:\n\n${history}`
+            )
+          }
+        }
       }
     })
     .done()
-
-const timeout = (limit: number): Promise<{ timeout: boolean }> & { cancel(): void } => {
-  let timeout_: NodeJS.Timeout | undefined
-  let res_:
-    | undefined
-    | ((
-        value:
-          | {
-              timeout: boolean
-            }
-          | PromiseLike<{
-              timeout: boolean
-            }>
-      ) => void)
-  const p = new Promise<{ timeout: boolean }>((res) => {
-    res_ = res
-    timeout_ = setTimeout(
-      () =>
-        res({
-          timeout: true,
-        }),
-      limit
-    )
-  })
-  //eslint-disable-next-line
-  ;(p as any).cancel = () => {
-    if (timeout_) clearTimeout(timeout_)
-    if (res_) res_({ timeout: false })
-  }
-  //eslint-disable-next-line
-  return p as any
-}

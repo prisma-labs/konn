@@ -2,7 +2,7 @@ import * as Fs from 'fs-jetpack'
 import { konn, providers } from '~/index'
 import { Providers } from '~/Providers'
 
-jest.setTimeout(20_000)
+jest.setTimeout(30_000)
 
 it('exports shorthand access', () => {
   expect(typeof providers.childProcess).toEqual('function')
@@ -21,38 +21,32 @@ type _Types = [
   Providers.ChildProcess.Params
 ]
 
-describe('__fixture_process__', () => {
+describe('runs while fixture process is running', () => {
   const ctx = konn()
     .useBeforeAll(
       providers.childProcess({
-        command: `yarn`,
-        args: [`ts-node`, `./tests/__fixture_process__.ts`],
+        command: `ts-node ./tests/providers-stdlib/childProcess/__long_running.fixture.ts`,
         start: /ready/,
-        debug: '*',
+        attachTerminal: true,
       })
     )
     .done()
-
-  it('runs while fixture process is running', () => {
+  it('test', () => {
     const filePath = './tests/fixture-process-proof-file.txt'
     expect(Fs.exists(filePath)).toBeTruthy()
     Fs.remove(filePath)
   })
 })
 
-/**
- * This should fail, but there is no way to tell jest that a hook failure is expected.
- */
-// describe.skip('__fixture_process_bad_exit__', () => {
-//   const ctx = konn()
-//     .useBeforeAll(
-//       Providers.ChildProcess.create({
-//         command: `yarn ts-node ./tests/__fixture_process_bad_exit__.ts`,
-//         start: /ready/,
-//         attachTerminal: false,
-//       })
-//     )
-//     .done()
-
-//   it('fails', () => {})
-// })
+describe('error', () => {
+  ;[`while running`, `on exit`].map((_) => {
+    it(_, () => {
+      expect(
+        Fs.read(
+          `tests/providers-stdlib/childProcess/__error_${_.replace(/ /, '_')}.log.ansi`,
+          'utf8'
+        )!.replace(/Time:.*/, 'Time: REDACTED')
+      ).toMatchSnapshot()
+    })
+  })
+})
