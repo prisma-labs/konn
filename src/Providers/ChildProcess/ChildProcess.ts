@@ -1,9 +1,9 @@
+import ono from '@jsdevtools/ono'
 import endent from 'endent'
 import * as Execa from 'execa'
 import { provider } from '~/provider'
 import { NeedsNothing } from '~/types'
 import { timeout } from '~/utils'
-import ono from '@jsdevtools/ono'
 
 export type Params = {
   /**
