@@ -21,7 +21,7 @@ jobs:
       - name: Install Dependencies
         run: yarn
       - run: yarn build
-      - run: test:build:child-process
+      - run: yarn test:build:child-process
       - run: yarn test
 
   # https://github.community/t/how-can-i-test-if-secrets-are-available-in-an-action/17911/10?u=jasonkuhrt
