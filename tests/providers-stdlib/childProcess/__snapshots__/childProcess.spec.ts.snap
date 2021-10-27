@@ -9,6 +9,7 @@ exports[`error error on exit 1`] = `
     Test context \\"childProcess\\" failed while running setdown logic inside Jest \\"afterAll\\": 
     The child process exited with non-zero exit code: 1. Its combined stderr and stdout output was:
 
+    ----------------------------------------------------------------
     ready
     /DYNAMIC FILE PATH
         throw new Error('Something bad happened while reacting to sigterm.');
@@ -25,6 +26,7 @@ exports[`error error on exit 1`] = `
 
       at DYNAMIC STACK TRACE LINE
       at DYNAMIC STACK TRACE LINE
+      ---------------------------------------------------------------- 
       Command failed with exit code 1: ts-node ./tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts
       /DYNAMIC FILE PATH
           throw new Error('Something bad happened while reacting to sigterm.');
@@ -34,6 +36,7 @@ exports[`error error on exit 1`] = `
       at DYNAMIC STACK TRACE LINE
       at DYNAMIC STACK TRACE LINE
       Error: The child process exited with non-zero exit code: 1. Its combined stderr and stdout output was:
+      ----------------------------------------------------------------
       ready
       /DYNAMIC FILE PATH
           throw new Error('Something bad happened while reacting to sigterm.');
@@ -41,6 +44,7 @@ exports[`error error on exit 1`] = `
       Error: Something bad happened while reacting to sigterm.
       at DYNAMIC STACK TRACE LINE
       at DYNAMIC STACK TRACE LINE
+      ---------------------------------------------------------------- 
       Command failed with exit code 1: ts-node ./tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts
       /DYNAMIC FILE PATH
           throw new Error('Something bad happened while reacting to sigterm.');
@@ -79,6 +83,7 @@ exports[`error error while running 1`] = `
     Test context \\"childProcess\\" failed while running setdown logic inside Jest \\"afterAll\\": 
     The child process exited with non-zero exit code: 1. Its combined stderr and stdout output was:
 
+    ----------------------------------------------------------------
     ready
     /DYNAMIC FILE PATH
         throw new Error('Something went wrong while running.');
@@ -94,17 +99,18 @@ exports[`error error while running 1`] = `
       7 | process.on('SIGTERM', () => {
 
       at DYNAMIC STACK TRACE LINE
-      at DYNAMIC STACK TRACE LINE
+      ---------------------------------------------------------------- 
       Command failed with exit code 1: ts-node ./tests/providers-stdlib/childProcess/__error_while_running.fixture.ts
       at DYNAMIC STACK TRACE LINE
       Error: The child process exited with non-zero exit code: 1. Its combined stderr and stdout output was:
+      ----------------------------------------------------------------
       ready
       /DYNAMIC FILE PATH
           throw new Error('Something went wrong while running.');
                 ^
       Error: Something went wrong while running.
       at DYNAMIC STACK TRACE LINE
-      at DYNAMIC STACK TRACE LINE
+      ---------------------------------------------------------------- 
       Command failed with exit code 1: ts-node ./tests/providers-stdlib/childProcess/__error_while_running.fixture.ts
       at DYNAMIC STACK TRACE LINE
       at DYNAMIC STACK TRACE LINE
@@ -132,9 +138,11 @@ exports[`error start timeout 1`] = `
     Test context \\"childProcess\\" failed while running setup logic inside Jest \\"beforeAll\\": 
     Timed out (500 ms) while waiting for child process start signal /ready/. While waiting, saw this stdout and stderr output from the process:
 
+    ----------------------------------------------------------------
     1 (stdout)
     2 (stdout)
     3 (stderr)
+    ----------------------------------------------------------------
 
       30 |       })
       31 |     } catch (error) {
@@ -146,9 +154,11 @@ exports[`error start timeout 1`] = `
 
       at DYNAMIC STACK TRACE LINE
       Error: Timed out (500 ms) while waiting for child process start signal /ready/. While waiting, saw this stdout and stderr output from the process:
+      ----------------------------------------------------------------
       1 (stdout)
       2 (stdout)
       3 (stderr)
+      ----------------------------------------------------------------
       at DYNAMIC STACK TRACE LINE
       at DYNAMIC STACK TRACE LINE
 

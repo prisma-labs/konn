@@ -216,11 +216,13 @@ export const create = (params: Params) =>
     .done()
 
 const renderStdioHistory = (childProcess: ChildProcessInternal): string => {
-  if (childProcess._.stdioHistory.length === 0) {
-    return `N/A -- THERE WAS NO STDOUT/STDERR FROM THE CHILD PROCESS!`
-  }
+  const border = `----------------------------------------------------------------`
+  const history =
+    childProcess._.stdioHistory.length === 0
+      ? `N/A -- THERE WAS NO STDOUT/STDERR FROM THE CHILD PROCESS!`
+      : childProcess._.stdioHistory.join('\n')
 
-  return childProcess._.stdioHistory.join('\n')
+  return `${border}\n${history}\n${border}`
 }
 
 const processParamStart = (params: Params): undefined | { timeout: number; when: RegExp } => {

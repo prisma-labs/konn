@@ -6,6 +6,7 @@ FAIL tests/providers-stdlib/childProcess/__error_on_exit.ts
     Test context "childProcess" failed while running setdown logic inside Jest "afterAll": 
     The child process exited with non-zero exit code: 1. Its combined stderr and stdout output was:
 
+    ----------------------------------------------------------------
     ready
     /Users/jasonkuhrt/projects/prisma-labs/konn/tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts:14
         throw new Error('Something bad happened while reacting to sigterm.');
@@ -22,6 +23,7 @@ FAIL tests/providers-stdlib/childProcess/__error_on_exit.ts
 
       at process.<anonymous> (tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts:14:11)
       at process.emit.sharedData.processEmitHook.installedValue [as emit] (node_modules/@cspotcode/source-map-support/source-map-support.js:613:40)
+      ---------------------------------------------------------------- 
       Command failed with exit code 1: ts-node ./tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts
       /Users/jasonkuhrt/projects/prisma-labs/konn/tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts:14
           throw new Error('Something bad happened while reacting to sigterm.');
@@ -31,6 +33,7 @@ FAIL tests/providers-stdlib/childProcess/__error_on_exit.ts
       at process.emit.sharedData.processEmitHook.installedValue [as emit] (node_modules/@cspotcode/source-map-support/source-map-support.js:613:40)
       at src/runners.ts:66:16
       Error: The child process exited with non-zero exit code: 1. Its combined stderr and stdout output was:
+      ----------------------------------------------------------------
       ready
       /Users/jasonkuhrt/projects/prisma-labs/konn/tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts:14
           throw new Error('Something bad happened while reacting to sigterm.');
@@ -38,6 +41,7 @@ FAIL tests/providers-stdlib/childProcess/__error_on_exit.ts
       Error: Something bad happened while reacting to sigterm.
       at process.<anonymous> (tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts:14:11)
       at process.emit.sharedData.processEmitHook.installedValue [as emit] (node_modules/@cspotcode/source-map-support/source-map-support.js:613:40)
+      ---------------------------------------------------------------- 
       Command failed with exit code 1: ts-node ./tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts
       /Users/jasonkuhrt/projects/prisma-labs/konn/tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts:14
           throw new Error('Something bad happened while reacting to sigterm.');
@@ -45,7 +49,7 @@ FAIL tests/providers-stdlib/childProcess/__error_on_exit.ts
       Error: Something bad happened while reacting to sigterm.
       at process.<anonymous> (tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts:14:11)
       at process.emit.sharedData.processEmitHook.installedValue [as emit] (node_modules/@cspotcode/source-map-support/source-map-support.js:613:40)
-      at Object.setdown (src/Providers/ChildProcess/ChildProcess.ts:195:22)
+      at Object.setdown (src/Providers/ChildProcess/ChildProcess.ts:203:22)
       at src/runners.ts:60:7
       Error: Command failed with exit code 1: ts-node ./tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts
       /Users/jasonkuhrt/projects/prisma-labs/konn/tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts:14
@@ -62,5 +66,5 @@ FAIL tests/providers-stdlib/childProcess/__error_on_exit.ts
 Test Suites: 1 failed, 1 total
 Tests:       1 passed, 1 total
 Snapshots:   0 total
-Time:        2.79 s, estimated 3 s
+Time:        2.947 s, estimated 3 s
 Ran all test suites.
