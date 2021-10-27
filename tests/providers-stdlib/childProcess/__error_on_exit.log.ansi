@@ -1,66 +1,66 @@
-[0m[7m[1m[31m FAIL [39m[22m[27m[0m [2mtests/providers-stdlib/childProcess/[22m[1m__fail_on_exit.ts[22m
+FAIL tests/providers-stdlib/childProcess/__error_on_exit.ts
 
 
-  [1m● [22mTest suite failed to run
+  ● Test suite failed to run
 
     Test context "childProcess" failed while running setdown logic inside Jest "afterAll": 
-    The child process exited with non-zero exit code: 1. Its stdio was:
+    The child process exited with non-zero exit code: 1. Its combined stderr and stdout output was:
 
     ready
-    /Users/jasonkuhrt/projects/prisma-labs/konn/tests/providers-stdlib/childProcess/__fail_on_exit.fixture.ts:14
-        throw new Error('Something bad happened.');
+    /Users/jasonkuhrt/projects/prisma-labs/konn/tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts:14
+        throw new Error('Something bad happened while reacting to sigterm.');
               ^
-    Error: Something bad happened.
+    Error: Something bad happened while reacting to sigterm.
 
-    [0m [90m 12 |[39m [36mconst[39m workingTimeout [33m=[39m setTimeout(() [33m=>[39m {}[33m,[39m [35m1000[39m [33m*[39m [35m60[39m [33m*[39m [35m60[39m [90m/* 1h */[39m)[0m
-    [0m [90m 13 |[39m[0m
-    [0m[31m[1m>[22m[39m[90m 14 |[39m process[33m.[39mon([32m'SIGTERM'[39m[33m,[39m () [33m=>[39m {[0m
-    [0m [90m    |[39m           [31m[1m^[22m[39m[0m
-    [0m [90m 15 |[39m   clearTimeout(workingTimeout)[0m
-    [0m [90m 16 |[39m   [36mthrow[39m [36mnew[39m [33mError[39m([32m'Something bad happened.'[39m)[0m
-    [0m [90m 17 |[39m })[0m
+      12 | const workingTimeout = setTimeout(() => {}, 1000 * 60 * 60 /* 1h */)
+      13 |
+    > 14 | process.on('SIGTERM', () => {
+         |           ^
+      15 |   clearTimeout(workingTimeout)
+      16 |   throw new Error('Something bad happened while reacting to sigterm.')
+      17 | })
 
-      [2mat process.<anonymous> ([22mtests/providers-stdlib/childProcess/__fail_on_exit.fixture.ts[2m:14:11)[22m
-      [2mat process.emit.sharedData.processEmitHook.installedValue [as emit] ([22mnode_modules/@cspotcode/source-map-support/source-map-support.js[2m:613:40)[22m
-      Command failed with exit code 1: ts-node ./tests/providers-stdlib/childProcess/__fail_on_exit.fixture.ts
-      /Users/jasonkuhrt/projects/prisma-labs/konn/tests/providers-stdlib/childProcess/__fail_on_exit.fixture.ts:14
-          throw new Error('Something bad happened.');
+      at process.<anonymous> (tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts:14:11)
+      at process.emit.sharedData.processEmitHook.installedValue [as emit] (node_modules/@cspotcode/source-map-support/source-map-support.js:613:40)
+      Command failed with exit code 1: ts-node ./tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts
+      /Users/jasonkuhrt/projects/prisma-labs/konn/tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts:14
+          throw new Error('Something bad happened while reacting to sigterm.');
                 ^
-      Error: Something bad happened.
-      [2mat process.<anonymous> ([22mtests/providers-stdlib/childProcess/__fail_on_exit.fixture.ts[2m:14:11)[22m
-      [2mat process.emit.sharedData.processEmitHook.installedValue [as emit] ([22mnode_modules/@cspotcode/source-map-support/source-map-support.js[2m:613:40)[22m
-      [2mat [22msrc/runners.ts[2m:66:16[22m
-      Error: The child process exited with non-zero exit code: 1. Its stdio was:
+      Error: Something bad happened while reacting to sigterm.
+      at process.<anonymous> (tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts:14:11)
+      at process.emit.sharedData.processEmitHook.installedValue [as emit] (node_modules/@cspotcode/source-map-support/source-map-support.js:613:40)
+      at src/runners.ts:66:16
+      Error: The child process exited with non-zero exit code: 1. Its combined stderr and stdout output was:
       ready
-      /Users/jasonkuhrt/projects/prisma-labs/konn/tests/providers-stdlib/childProcess/__fail_on_exit.fixture.ts:14
-          throw new Error('Something bad happened.');
+      /Users/jasonkuhrt/projects/prisma-labs/konn/tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts:14
+          throw new Error('Something bad happened while reacting to sigterm.');
                 ^
-      Error: Something bad happened.
-      [2mat process.<anonymous> ([22mtests/providers-stdlib/childProcess/__fail_on_exit.fixture.ts[2m:14:11)[22m
-      [2mat process.emit.sharedData.processEmitHook.installedValue [as emit] ([22mnode_modules/@cspotcode/source-map-support/source-map-support.js[2m:613:40)[22m
-      Command failed with exit code 1: ts-node ./tests/providers-stdlib/childProcess/__fail_on_exit.fixture.ts
-      /Users/jasonkuhrt/projects/prisma-labs/konn/tests/providers-stdlib/childProcess/__fail_on_exit.fixture.ts:14
-          throw new Error('Something bad happened.');
+      Error: Something bad happened while reacting to sigterm.
+      at process.<anonymous> (tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts:14:11)
+      at process.emit.sharedData.processEmitHook.installedValue [as emit] (node_modules/@cspotcode/source-map-support/source-map-support.js:613:40)
+      Command failed with exit code 1: ts-node ./tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts
+      /Users/jasonkuhrt/projects/prisma-labs/konn/tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts:14
+          throw new Error('Something bad happened while reacting to sigterm.');
                 ^
-      Error: Something bad happened.
-      [2mat process.<anonymous> ([22mtests/providers-stdlib/childProcess/__fail_on_exit.fixture.ts[2m:14:11)[22m
-      [2mat process.emit.sharedData.processEmitHook.installedValue [as emit] ([22mnode_modules/@cspotcode/source-map-support/source-map-support.js[2m:613:40)[22m
-      [2mat Object.setdown ([22msrc/Providers/ChildProcess/ChildProcess.ts[2m:132:22)[22m
-      [2mat [22msrc/runners.ts[2m:60:7[22m
-      Error: Command failed with exit code 1: ts-node ./tests/providers-stdlib/childProcess/__fail_on_exit.fixture.ts
-      /Users/jasonkuhrt/projects/prisma-labs/konn/tests/providers-stdlib/childProcess/__fail_on_exit.fixture.ts:14
-          throw new Error('Something bad happened.');
+      Error: Something bad happened while reacting to sigterm.
+      at process.<anonymous> (tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts:14:11)
+      at process.emit.sharedData.processEmitHook.installedValue [as emit] (node_modules/@cspotcode/source-map-support/source-map-support.js:613:40)
+      at Object.setdown (src/Providers/ChildProcess/ChildProcess.ts:195:22)
+      at src/runners.ts:60:7
+      Error: Command failed with exit code 1: ts-node ./tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts
+      /Users/jasonkuhrt/projects/prisma-labs/konn/tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts:14
+          throw new Error('Something bad happened while reacting to sigterm.');
                 ^
-      Error: Something bad happened.
-      [2mat process.<anonymous> ([22mtests/providers-stdlib/childProcess/__fail_on_exit.fixture.ts[2m:14:11)[22m
-      [2mat process.emit.sharedData.processEmitHook.installedValue [as emit] ([22mnode_modules/@cspotcode/source-map-support/source-map-support.js[2m:613:40)[22m
-      [2mat makeError ([22mnode_modules/execa/lib/error.js[2m:60:11)[22m
-      [2mat handlePromise ([22mnode_modules/execa/index.js[2m:118:26)[22m
-      [2mat Object.setdown ([22msrc/Providers/ChildProcess/ChildProcess.ts[2m:126:11)[22m
-      [2mat [22msrc/runners.ts[2m:60:7[22m
+      Error: Something bad happened while reacting to sigterm.
+      at process.<anonymous> (tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts:14:11)
+      at process.emit.sharedData.processEmitHook.installedValue [as emit] (node_modules/@cspotcode/source-map-support/source-map-support.js:613:40)
+      at makeError (node_modules/execa/lib/error.js:60:11)
+      at handlePromise (node_modules/execa/index.js:118:26)
+      at Object.setdown (src/Providers/ChildProcess/ChildProcess.ts:191:11)
+      at src/runners.ts:60:7
 
-[1mTest Suites: [22m[1m[31m1 failed[39m[22m, 1 total
-[1mTests:       [22m[1m[32m1 passed[39m[22m, 1 total
-[1mSnapshots:   [22m0 total
-[1mTime:[22m        2.663 s, estimated 3 s
-[2mRan all test suites[22m[2m.[22m
+Test Suites: 1 failed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        2.79 s, estimated 3 s
+Ran all test suites.

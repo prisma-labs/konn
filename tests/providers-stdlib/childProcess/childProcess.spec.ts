@@ -1,6 +1,8 @@
 import * as Fs from 'fs-jetpack'
 import { konn, providers } from '~/index'
 import { Providers } from '~/Providers'
+import { timeout } from '~/utils'
+import { tests } from './__data__'
 
 jest.setTimeout(30_000)
 
@@ -27,7 +29,6 @@ describe('runs while fixture process is running', () => {
       providers.childProcess({
         command: `ts-node ./tests/providers-stdlib/childProcess/__long_running.fixture.ts`,
         start: /ready/,
-        attachTerminal: true,
       })
     )
     .done()
@@ -38,14 +39,28 @@ describe('runs while fixture process is running', () => {
   })
 })
 
+describe('long running node script without signal handling works', () => {
+  const ctx = konn()
+    .useBeforeAll(
+      providers.childProcess({
+        command: `ts-node ./tests/providers-stdlib/childProcess/__long_running_no_signal_handling.fixture.ts`,
+        start: /ready/,
+      })
+    )
+    .done()
+  it('test', async () => {
+    await timeout(100)
+  })
+})
+
 describe('error', () => {
-  ;[`while running`, `on exit`].map((_) => {
-    it(_, () => {
+  Object.values(tests).map((_) => {
+    it(_.replace(/_/g, ' '), () => {
       expect(
-        Fs.read(
-          `tests/providers-stdlib/childProcess/__error_${_.replace(/ /, '_')}.log.ansi`,
-          'utf8'
-        )!.replace(/Time:.*/, 'Time: REDACTED')
+        Fs.read(`tests/providers-stdlib/childProcess/__${_}.log.ansi`, 'utf8')!
+          .replace(/Time:.*/, 'Time: DYNAMIC NUMBER')
+          .replace(/(^ *at ).*$/gm, '$1DYNAMIC STACK TRACE LINE')
+          .replace(/(^ *\/).*$/gm, '$1DYNAMIC FILE PATH')
       ).toMatchSnapshot()
     })
   })

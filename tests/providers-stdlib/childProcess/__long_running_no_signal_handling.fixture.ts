@@ -12,6 +12,5 @@ setTimeout(() => {
 const workingTimeout = setTimeout(() => {}, 1000 * 60 * 60 /* 1h */)
 
 process.on('SIGTERM', () => {
-  clearTimeout(workingTimeout)
-  throw new Error('Something bad happened while reacting to sigterm.')
+  // Not responding to sigterm to force sigkill
 })

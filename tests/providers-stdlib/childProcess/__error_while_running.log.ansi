@@ -1,36 +1,48 @@
-[0m[7m[1m[31m FAIL [39m[22m[27m[0m [2mtests/providers-stdlib/childProcess/[22m[1m__error_while_running.ts[22m
+FAIL tests/providers-stdlib/childProcess/__error_while_running.ts
 
 
-  [1m● [22mTest suite failed to run
+  ● Test suite failed to run
 
     Test context "childProcess" failed while running setdown logic inside Jest "afterAll": 
-    The child process exited with non-zero exit code: undefined. Its stdio was:
+    The child process exited with non-zero exit code: 1. Its combined stderr and stdout output was:
 
-     
-    Command was killed with SIGTERM (Termination): ts-node ./tests/providers-stdlib/childProcess/__error_while_running.fixture.ts
+    ready
+    /Users/jasonkuhrt/projects/prisma-labs/konn/tests/providers-stdlib/childProcess/__error_while_running.fixture.ts:4
+        throw new Error('Something went wrong while running.');
+              ^
+    Error: Something went wrong while running.
 
-    [0m [90m 64 |[39m       })[0m
-    [0m [90m 65 |[39m     } [36mcatch[39m (error) {[0m
-    [0m[31m[1m>[22m[39m[90m 66 |[39m       [36mthrow[39m ono([0m
-    [0m [90m    |[39m                [31m[1m^[22m[39m[0m
-    [0m [90m 67 |[39m         error [36mas[39m [33mError[39m[33m,[39m[0m
-    [0m [90m 68 |[39m         [32m`Test context "${params.providerName}" failed while running setdown logic inside Jest "${params.jestHookName}":`[39m[0m
-    [0m [90m 69 |[39m       )[0m
+      2 |
+      3 | setTimeout(() => {
+    > 4 |   throw new Error('Something went wrong while running.')
+        |           ^
+      5 | }, 100)
+      6 |
+      7 | process.on('SIGTERM', () => {
 
-      [2mat [22msrc/runners.ts[2m:66:16[22m
-      Error: The child process exited with non-zero exit code: undefined. Its stdio was:
-       
-      Command was killed with SIGTERM (Termination): ts-node ./tests/providers-stdlib/childProcess/__error_while_running.fixture.ts
-      [2mat Object.setdown ([22msrc/Providers/ChildProcess/ChildProcess.ts[2m:132:22)[22m
-      [2mat [22msrc/runners.ts[2m:60:7[22m
-      Error: Command was killed with SIGTERM (Termination): ts-node ./tests/providers-stdlib/childProcess/__error_while_running.fixture.ts
-      [2mat makeError ([22mnode_modules/execa/lib/error.js[2m:60:11)[22m
-      [2mat handlePromise ([22mnode_modules/execa/index.js[2m:118:26)[22m
-      [2mat Object.setdown ([22msrc/Providers/ChildProcess/ChildProcess.ts[2m:126:11)[22m
-      [2mat [22msrc/runners.ts[2m:60:7[22m
+      at Timeout._onTimeout (tests/providers-stdlib/childProcess/__error_while_running.fixture.ts:4:11)
+      at processTimers (node:internal/timers:500:7)
+      Command failed with exit code 1: ts-node ./tests/providers-stdlib/childProcess/__error_while_running.fixture.ts
+      at src/runners.ts:66:16
+      Error: The child process exited with non-zero exit code: 1. Its combined stderr and stdout output was:
+      ready
+      /Users/jasonkuhrt/projects/prisma-labs/konn/tests/providers-stdlib/childProcess/__error_while_running.fixture.ts:4
+          throw new Error('Something went wrong while running.');
+                ^
+      Error: Something went wrong while running.
+      at Timeout._onTimeout (tests/providers-stdlib/childProcess/__error_while_running.fixture.ts:4:11)
+      at processTimers (node:internal/timers:500:7)
+      Command failed with exit code 1: ts-node ./tests/providers-stdlib/childProcess/__error_while_running.fixture.ts
+      at Object.setdown (src/Providers/ChildProcess/ChildProcess.ts:195:22)
+      at src/runners.ts:60:7
+      Error: Command failed with exit code 1: ts-node ./tests/providers-stdlib/childProcess/__error_while_running.fixture.ts
+      at makeError (node_modules/execa/lib/error.js:60:11)
+      at handlePromise (node_modules/execa/index.js:118:26)
+      at Object.setdown (src/Providers/ChildProcess/ChildProcess.ts:191:11)
+      at src/runners.ts:60:7
 
-[1mTest Suites: [22m[1m[31m1 failed[39m[22m, 1 total
-[1mTests:       [22m[1m[32m1 passed[39m[22m, 1 total
-[1mSnapshots:   [22m0 total
-[1mTime:[22m        2.702 s
-[2mRan all test suites[22m[2m.[22m
+Test Suites: 1 failed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        3.284 s
+Ran all test suites.
