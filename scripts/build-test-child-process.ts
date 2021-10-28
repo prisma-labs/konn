@@ -1,8 +1,12 @@
-import execa from 'execa'
-import { log } from 'floggy'
-import * as Fs from 'fs-jetpack'
+import execa from 'execa';
+import { log } from 'floggy';
+import * as Fs from 'fs-jetpack';
 
-import { tests } from '../tests/providers-stdlib/childProcess/__data__'
+import { tests } from '../tests/providers-stdlib/childProcess/__data__';
+
+log.settings({
+  pretty: true,
+})
 
 void main()
 
