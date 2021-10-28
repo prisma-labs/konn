@@ -1,10 +1,9 @@
-import { casesHandled } from 'floggy/dist-cjs/utils';
-import * as Fs from 'fs-jetpack';
-import { konn, providers } from '~/index';
-import { Providers } from '~/Providers';
-import { timeout } from '~/utils';
-
-import { tests } from './__data__';
+import { casesHandled } from 'floggy/dist-cjs/utils'
+import * as Fs from 'fs-jetpack'
+import { konn, providers } from '~/index'
+import { Providers } from '~/Providers'
+import { timeout } from '~/utils'
+import { tests } from './__data__'
 
 jest.setTimeout(30_000)
 
