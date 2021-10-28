@@ -1,3 +1,4 @@
+import { casesHandled } from 'floggy/dist-cjs/utils'
 import * as Fs from 'fs-jetpack'
 import { konn, providers } from '~/index'
 import { Providers } from '~/Providers'
@@ -56,12 +57,29 @@ describe('long running node script without signal handling works', () => {
 describe('error', () => {
   Object.values(tests).map((_) => {
     it(_.replace(/_/g, ' '), () => {
-      expect(
-        Fs.read(`tests/providers-stdlib/childProcess/__${_}.log.ansi`, 'utf8')!
-          .replace(/Time:.*/, 'Time: DYNAMIC NUMBER')
-          .replace(/(^ *at ).*$/gm, '$1DYNAMIC STACK TRACE LINE')
-          .replace(/(^ *\/).*$/gm, '$1DYNAMIC FILE PATH')
-      ).toMatchSnapshot()
+      const stdout = Fs.read(`tests/providers-stdlib/childProcess/__${_}.log.out.ansi`, 'utf8')!
+      const stderr = Fs.read(`tests/providers-stdlib/childProcess/__${_}.log.err.ansi`, 'utf8')!
+      expect(stdout.trim()).toEqual('')
+      expect(stderr).toMatch(/Test Suites: \d failed, \d total/)
+      switch (_) {
+        case 'error_on_exit':
+          expect(stderr).toMatch(/Error: Something bad happened while reacting to sigterm/)
+          break
+        case 'error_on_spawn':
+          expect(stderr).toMatch(/Error while attempting to spawn: spawn this-will-fail-on-spawn ENOENT/)
+          break
+        case 'start_timeout':
+          expect(stderr).toMatch(
+            /Timed out \(500 ms\) while waiting for child process start signal \/ready\/. While waiting, saw this stdout and stderr output from the process:/
+          )
+          expect(stderr).toMatch(/-+\n *1 \(stdout\)\n *2 \(stdout\)\n *3 \(stderr\)\n *-+/)
+          break
+        case 'error_while_running':
+          expect(stderr).toMatch(/Error: Something went wrong while running./)
+          break
+        default:
+          casesHandled(_)
+      }
     })
   })
 })

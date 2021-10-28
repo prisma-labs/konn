@@ -1,0 +1,27 @@
+FAIL tests/providers-stdlib/childProcess/__error_on_spawn.ts
+  error on_spawn
+    ✕ test
+
+  ● error on_spawn › test
+
+    Test context "childProcess" failed while running setup logic inside Jest "beforeAll": 
+    Error while attempting to spawn: spawn this-will-fail-on-spawn ENOENT
+
+      30 |       })
+      31 |     } catch (error) {
+    > 32 |       throw ono(
+         |                ^
+      33 |         error as Error,
+      34 |         `Test context "${params.providerName}" failed while running setup logic inside Jest "${params.jestHookName}":`
+      35 |       )
+
+      at src/runners.ts:32:16
+      Error: Error while attempting to spawn: spawn this-will-fail-on-spawn ENOENT
+      at Object.setup (src/Providers/ChildProcess/ChildProcess.ts:162:15)
+      at src/runners.ts:26:28
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 total
+Snapshots:   0 total
+Time:        2.391 s, estimated 3 s
+Ran all test suites.

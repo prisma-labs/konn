@@ -59,6 +59,7 @@ export type Contributes = {
 type ChildProcessInternal = Execa.ExecaChildProcess & {
   _: {
     stdioHistory: string[]
+    error?: Error
   }
 }
 
@@ -101,6 +102,11 @@ export const create = (params: Params) =>
         } as NodeJS.ProcessEnv,
       })
 
+      // Capture async errors here for handling later. Note handling later is achieved by event emitters, not the return value here. Without this Jest will exit immediately upon spawn failure...
+      childProcess.catch((e) => {
+        return
+      })
+
       const childProcessInternal = childProcess as ChildProcessInternal
 
       childProcessInternal._ = {
@@ -131,7 +137,29 @@ export const create = (params: Params) =>
       ])
 
       if (maybeError) {
-        throw maybeError
+        // childProcessInternal._.error = maybeError
+        if (maybeError instanceof Error) {
+          throw maybeError
+        }
+        /**
+         * Execa throws an error that is not an instance of Error somehow:
+         *
+         * @example
+         *
+         * Error: spawn this-will-fail-on-spawn ENOENT
+         *     at Process.ChildProcess._handle.onexit (node:internal/child_process:282:19)
+         *     at onErrorNT (node:internal/child_process:480:16)
+         *     at processTicksAndRejections (node:internal/process/task_queues:83:21) {
+         *   errno: -2,
+         *   code: 'ENOENT',
+         *   syscall: 'spawn this-will-fail-on-spawn',
+         *   path: 'this-will-fail-on-spawn',
+         *   spawnargs: []
+         * }
+         *
+         */
+        const maybeErrorAny = maybeError as { message: string }
+        throw new Error(`Error while attempting to spawn: ${maybeErrorAny.message}`)
       }
 
       if (startConfig) {
@@ -184,6 +212,11 @@ export const create = (params: Params) =>
     })
     .after(async (ctx, utils) => {
       if (ctx.childProcess) {
+        // const childProcessInternal = ctx.childProcess as ChildProcessInternal
+
+        // if (childProcessInternal._.error) {
+        //   throw new Error(`Error during test: ${childProcessInternal._.error.message}`)
+        // }
         ctx.childProcess.kill('SIGTERM', {
           forceKillAfterTimeout: 2_000,
         })
