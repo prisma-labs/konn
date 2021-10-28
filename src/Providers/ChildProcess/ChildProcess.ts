@@ -59,7 +59,6 @@ export type Contributes = {
 type ChildProcessInternal = Execa.ExecaChildProcess & {
   _: {
     stdioHistory: string[]
-    error?: Error
   }
 }
 
@@ -103,7 +102,7 @@ export const create = (params: Params) =>
       })
 
       // Capture async errors here for handling later. Note handling later is achieved by event emitters, not the return value here. Without this Jest will exit immediately upon spawn failure...
-      childProcess.catch((e) => {
+      childProcess.catch(() => {
         return
       })
 
@@ -212,11 +211,6 @@ export const create = (params: Params) =>
     })
     .after(async (ctx, utils) => {
       if (ctx.childProcess) {
-        // const childProcessInternal = ctx.childProcess as ChildProcessInternal
-
-        // if (childProcessInternal._.error) {
-        //   throw new Error(`Error during test: ${childProcessInternal._.error.message}`)
-        // }
         ctx.childProcess.kill('SIGTERM', {
           forceKillAfterTimeout: 2_000,
         })
