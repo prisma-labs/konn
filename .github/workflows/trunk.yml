@@ -27,7 +27,6 @@ jobs:
       - run: yarn test:debug
         if: matrix.os != 'windows-latest'
 
-
   # https://github.community/t/how-can-i-test-if-secrets-are-available-in-an-action/17911/10?u=jasonkuhrt
   checkNpmTokenSet:
     name: Check if NPM_TOKEN secret is set
