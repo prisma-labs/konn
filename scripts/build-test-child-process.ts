@@ -1,17 +1,23 @@
-import execa from 'execa'
-import { log } from 'floggy'
-import { tests } from '../tests/providers-stdlib/childProcess/__data__'
+import execa from 'execa';
+import { log } from 'floggy';
+import * as Fs from 'fs-jetpack';
 
-Object.values(tests).forEach((test) => {
-  log.info('generate', { test })
-  execa.commandSync(
-    `jest --testRegex '.*childProcess/__${test}.ts' 2>tests/providers-stdlib/childProcess/__${test}.log.err.ansi 1>tests/providers-stdlib/childProcess/__${test}.log.out.ansi`,
-    {
+import { tests } from '../tests/providers-stdlib/childProcess/__data__';
+
+void main()
+
+async function main() {
+  for (const test of Object.values(tests)) {
+    log.info('generate', { test })
+
+    const result = (await execa.command(`jest --testRegex '.*childProcess/__${test}.ts'`, {
+      all: true,
       reject: false,
       preferLocal: true,
-      shell: true,
-    }
-  )
-})
+    })) as execa.ExecaSyncReturnValue<string> & { all: string }
 
-log.info('done')
+    Fs.write(`tests/providers-stdlib/childProcess/__${test}.log.ansi`, result.all)
+  }
+
+  log.info('done')
+}

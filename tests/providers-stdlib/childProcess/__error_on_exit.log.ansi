@@ -51,7 +51,7 @@ FAIL tests/providers-stdlib/childProcess/__error_on_exit.ts
       at process.<anonymous> (tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts:14:11)
       at process.emit.sharedData.processEmitHook.installedValue [as emit] (node_modules/@cspotcode/source-map-support/source-map-support.js:613:40)
       ready
-      at Object.setdown (src/Providers/ChildProcess/ChildProcess.ts:236:22)
+      at Object.setdown (src/Providers/ChildProcess/ChildProcess.ts:230:22)
       at src/runners.ts:60:7
       Error: Command failed with exit code 1: ts-node ./tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts
       /Users/jasonkuhrt/projects/prisma-labs/konn/tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts:14
@@ -67,5 +67,5 @@ FAIL tests/providers-stdlib/childProcess/__error_on_exit.ts
 Test Suites: 1 failed, 1 total
 Tests:       1 passed, 1 total
 Snapshots:   0 total
-Time:        2.908 s, estimated 3 s
+Time:        3.268 s
 Ran all test suites.

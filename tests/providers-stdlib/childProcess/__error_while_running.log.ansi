@@ -47,7 +47,7 @@ FAIL tests/providers-stdlib/childProcess/__error_while_running.ts
       Error: Something went wrong while running.
       at Timeout._onTimeout (tests/providers-stdlib/childProcess/__error_while_running.fixture.ts:4:11)
       ready
-      at Object.setdown (src/Providers/ChildProcess/ChildProcess.ts:236:22)
+      at Object.setdown (src/Providers/ChildProcess/ChildProcess.ts:230:22)
       at src/runners.ts:60:7
       Error: Command failed with exit code 1: ts-node ./tests/providers-stdlib/childProcess/__error_while_running.fixture.ts
       /Users/jasonkuhrt/projects/prisma-labs/konn/tests/providers-stdlib/childProcess/__error_while_running.fixture.ts:4
@@ -62,5 +62,5 @@ FAIL tests/providers-stdlib/childProcess/__error_while_running.ts
 Test Suites: 1 failed, 1 total
 Tests:       1 passed, 1 total
 Snapshots:   0 total
-Time:        3.714 s, estimated 4 s
+Time:        3.434 s, estimated 4 s
 Ran all test suites.

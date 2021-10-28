@@ -1,6 +1,6 @@
 FAIL tests/providers-stdlib/childProcess/__start_timeout.ts
   start timeout
-    ✕ test (1 ms)
+    ✕ test
 
   ● start timeout › test
 
@@ -28,11 +28,11 @@ FAIL tests/providers-stdlib/childProcess/__start_timeout.ts
       2 (stdout)
       3 (stderr)
       ----------------------------------------------------------------
-      at Object.setup (src/Providers/ChildProcess/ChildProcess.ts:198:17)
+      at Object.setup (src/Providers/ChildProcess/ChildProcess.ts:197:17)
       at src/runners.ts:26:28
 
 Test Suites: 1 failed, 1 total
 Tests:       1 failed, 1 total
 Snapshots:   0 total
-Time:        2.923 s, estimated 3 s
+Time:        3.512 s
 Ran all test suites.
