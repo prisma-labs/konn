@@ -55,8 +55,8 @@ jobs:
           cache: yarn
       - run: yarn
       - run: yarn build
+      - run: yarn test:build:child-process
       - run: yarn test:debug --forceExit
         if: matrix.os == 'windows-latest'
-      - run: yarn test:build:child-process
       - run: yarn test:debug
         if: matrix.os != 'windows-latest'
