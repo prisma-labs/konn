@@ -1,0 +1,38 @@
+FAIL tests/providers-stdlib/childProcess/__start_timeout.ts
+  start timeout
+    ✕ test
+
+  ● start timeout › test
+
+    Test context "childProcess" failed while running setup logic inside Jest "beforeAll": 
+    Timed out (500 ms) while waiting for child process start signal /ready/. While waiting, saw this stdout and stderr output from the process:
+
+    ----------------------------------------------------------------
+    1 (stdout)
+    2 (stdout)
+    3 (stderr)
+    ----------------------------------------------------------------
+
+      30 |       })
+      31 |     } catch (error) {
+    > 32 |       throw ono(
+         |                ^
+      33 |         error as Error,
+      34 |         `Test context "${params.providerName}" failed while running setup logic inside Jest "${params.jestHookName}":`
+      35 |       )
+
+      at src/runners.ts:32:16
+      Error: Timed out (500 ms) while waiting for child process start signal /ready/. While waiting, saw this stdout and stderr output from the process:
+      ----------------------------------------------------------------
+      1 (stdout)
+      2 (stdout)
+      3 (stderr)
+      ----------------------------------------------------------------
+      at Object.setup (src/Providers/ChildProcess/ChildProcess.ts:197:17)
+      at src/runners.ts:26:28
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 total
+Snapshots:   0 total
+Time:        3.512 s
+Ran all test suites.

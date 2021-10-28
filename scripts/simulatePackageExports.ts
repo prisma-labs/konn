@@ -1,7 +1,7 @@
 /**
- * Simualated Module Exports
+ * Simulated Module Exports
  *
- * This script builds the modules that will be consumed publically. They front the actual code inside ./dist.
+ * This script builds the modules that will be consumed publicly. They front the actual code inside ./dist.
  * The problem being solved here is that it allows consumers to do e.g. this:
  *
  *     Import { ... } from 'nexus/testing'

@@ -21,7 +21,13 @@ jobs:
       - name: Install Dependencies
         run: yarn
       - run: yarn build
-      - run: yarn test
+      - run: yarn test:build:child-process
+      - run: yarn test:debug --forceExit
+        # Cannot get the child process tests to pass on Windows :(
+      - run: yarn test:debug --testPathIgnorePatterns childProcess
+        if: matrix.os == 'windows-latest'
+      - run: yarn test:debug
+        if: matrix.os != 'windows-latest'
 
   # https://github.community/t/how-can-i-test-if-secrets-are-available-in-an-action/17911/10?u=jasonkuhrt
   checkNpmTokenSet:

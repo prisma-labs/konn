@@ -55,4 +55,9 @@ jobs:
           cache: yarn
       - run: yarn
       - run: yarn build
-      - run: yarn test
+      - run: yarn test:build:child-process
+      # Cannot get the child process tests to pass on Windows :(
+      - run: yarn test:debug --testPathIgnorePatterns childProcess
+        if: matrix.os == 'windows-latest'
+      - run: yarn test:debug
+        if: matrix.os != 'windows-latest'

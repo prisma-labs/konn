@@ -1,0 +1,71 @@
+FAIL tests/providers-stdlib/childProcess/__error_on_exit.ts
+
+
+  ● Test suite failed to run
+
+    Test context "childProcess" failed while running setdown logic inside Jest "afterAll": 
+    The child process exited with non-zero exit code: 1. Its combined stderr and stdout output was:
+
+    ----------------------------------------------------------------
+    ready
+    /Users/jasonkuhrt/projects/prisma-labs/konn/tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts:14
+        throw new Error('Something bad happened while reacting to sigterm.');
+              ^
+    Error: Something bad happened while reacting to sigterm.
+
+      12 | const workingTimeout = setTimeout(() => {}, 1000 * 60 * 60 /* 1h */)
+      13 |
+    > 14 | process.on('SIGTERM', () => {
+         |           ^
+      15 |   clearTimeout(workingTimeout)
+      16 |   throw new Error('Something bad happened while reacting to sigterm.')
+      17 | })
+
+      at process.<anonymous> (tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts:14:11)
+      at process.emit.sharedData.processEmitHook.installedValue [as emit] (node_modules/@cspotcode/source-map-support/source-map-support.js:613:40)
+      ---------------------------------------------------------------- 
+      Command failed with exit code 1: ts-node ./tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts
+      /Users/jasonkuhrt/projects/prisma-labs/konn/tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts:14
+          throw new Error('Something bad happened while reacting to sigterm.');
+                ^
+      Error: Something bad happened while reacting to sigterm.
+      at process.<anonymous> (tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts:14:11)
+      at process.emit.sharedData.processEmitHook.installedValue [as emit] (node_modules/@cspotcode/source-map-support/source-map-support.js:613:40)
+      ready
+      at src/runners.ts:66:16
+      Error: The child process exited with non-zero exit code: 1. Its combined stderr and stdout output was:
+      ----------------------------------------------------------------
+      ready
+      /Users/jasonkuhrt/projects/prisma-labs/konn/tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts:14
+          throw new Error('Something bad happened while reacting to sigterm.');
+                ^
+      Error: Something bad happened while reacting to sigterm.
+      at process.<anonymous> (tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts:14:11)
+      at process.emit.sharedData.processEmitHook.installedValue [as emit] (node_modules/@cspotcode/source-map-support/source-map-support.js:613:40)
+      ---------------------------------------------------------------- 
+      Command failed with exit code 1: ts-node ./tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts
+      /Users/jasonkuhrt/projects/prisma-labs/konn/tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts:14
+          throw new Error('Something bad happened while reacting to sigterm.');
+                ^
+      Error: Something bad happened while reacting to sigterm.
+      at process.<anonymous> (tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts:14:11)
+      at process.emit.sharedData.processEmitHook.installedValue [as emit] (node_modules/@cspotcode/source-map-support/source-map-support.js:613:40)
+      ready
+      at Object.setdown (src/Providers/ChildProcess/ChildProcess.ts:230:22)
+      at src/runners.ts:60:7
+      Error: Command failed with exit code 1: ts-node ./tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts
+      /Users/jasonkuhrt/projects/prisma-labs/konn/tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts:14
+          throw new Error('Something bad happened while reacting to sigterm.');
+                ^
+      Error: Something bad happened while reacting to sigterm.
+      at process.<anonymous> (tests/providers-stdlib/childProcess/__error_on_exit.fixture.ts:14:11)
+      at process.emit.sharedData.processEmitHook.installedValue [as emit] (node_modules/@cspotcode/source-map-support/source-map-support.js:613:40)
+      ready
+      at makeError (node_modules/execa/lib/error.js:60:11)
+      at handlePromise (node_modules/execa/index.js:118:26)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        3.268 s
+Ran all test suites.
