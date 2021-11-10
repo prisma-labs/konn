@@ -75,7 +75,7 @@ it('...', async () => {
 
 ## Introduction
 
-Kont is a library for building contextual data for Jest tests (Kont is only lightly coupled to Jest and could support more things in the future). On the one hand it makes it easy to modularize test resources into reusable abstractions, but it turns out to often just be a better way in general to deal with Jest lifecycle hooks.
+Konn is a library for building contextual data for Jest tests (Konn is only lightly coupled to Jest and could support more things in the future). On the one hand it makes it easy to modularize test resources into reusable abstractions, but it turns out to often just be a better way in general to deal with Jest lifecycle hooks.
 
 In this brief introduction we're going to show you how to go from this:
 
@@ -120,7 +120,7 @@ Let's begin. What are some problems with the initial code?
 1. Mental overhead caused by tracking the input/output (arguments/return) pipeline implied, (as opposed to encoded natively with functions).
 1. Cannot trivially modularize setup/setdown code because `let` binding creates tight coupling.
 
-How can we improve using Kont? We'll start by using its inline hooks.
+How can we improve using Konn? We'll start by using its inline hooks.
 
 ```ts
 import { chromium } from 'playwright'
@@ -143,7 +143,7 @@ test('...', async () => {
 })
 ```
 
-Now we have a clear input/output flow. We also have weaker coupling between the test and steup/teardown logic which we'll now take advantage of to reduce the boilerplate. We'll use Kont's "providers" feature to modularize the setup/teardown in another module.
+Now we have a clear input/output flow. We also have weaker coupling between the test and steup/teardown logic which we'll now take advantage of to reduce the boilerplate. We'll use Konn's "providers" feature to modularize the setup/teardown in another module.
 
 ```ts
 // tests/providers/browser.ts
@@ -183,11 +183,11 @@ test('...', async () => {
 
 Steps Taken:
 
-1. We use Kont's dedicated provider API to create our own provider, very similar to the inline API.
+1. We use Konn's dedicated provider API to create our own provider, very similar to the inline API.
 1. We tap into lifecycle hooks. Note we don't commit here to whether this is before each or all tests.
-1. We consume the provider using Kont's `useBeforeAll` method.
+1. We consume the provider using Konn's `useBeforeAll` method.
 
-This concludes the introduction. There is more to Kont than this. For example, below are some examples of Kont's typesafety. Happy coding!
+This concludes the introduction. There is more to Konn than this. For example, below are some examples of Konn's typesafety. Happy coding!
 
 ```ts
 const ctx = konn()
@@ -221,13 +221,13 @@ konn()
 
 ### Context Builder VS Provider Builder APIs
 
-Kont has two primary APIs. A context builder and a provider builer.
+Konn has two primary APIs. A context builder and a provider builer.
 
-The context builder is the primary use-case of Kont for day to day work.
+The context builder is the primary use-case of Konn for day to day work.
 
 The provider builder API is for library authors and your own project needs when you've found patterns you want to factor out.
 
-It is expected that any sizable test suite is going to be a mix of generic community/standard Kont providers and tailored ones you have written just for your project.
+It is expected that any sizable test suite is going to be a mix of generic community/standard Konn providers and tailored ones you have written just for your project.
 
 Context Builder API:
 
@@ -261,13 +261,13 @@ afterEach(/* ... */)
 afterAll(/* ... */)
 ```
 
-In Kont the above maps to:
+In Konn the above maps to:
 
 ```ts
 konn().beforeAll(/* ... */).beforeEach(/* ... */).afterEach(/* ... */).afterAll(/* ... */)
 ```
 
-In Kont you must signal an end with `.done()` to access the context that tests will use.
+In Konn you must signal an end with `.done()` to access the context that tests will use.
 
 ```ts
 const ctx1 = konn().beforeEach(/* ... */)
@@ -279,7 +279,7 @@ it('...', () => {
 })
 ```
 
-In Kont each setup/setdown function receives context, and setup functions _can_ return additional context.
+In Konn each setup/setdown function receives context, and setup functions _can_ return additional context.
 
 ```ts
 konn()
@@ -304,7 +304,7 @@ konn()
   })
 ```
 
-Kont statically types that setup functions in before-all hooks cannot see context contributed by setup functions in before-each hooks.
+Konn statically types that setup functions in before-all hooks cannot see context contributed by setup functions in before-each hooks.
 
 ```ts
 konn()
@@ -321,17 +321,17 @@ konn()
 
 ### Providers
 
-Kont providers are a way to modularize repetitive setup/setdown logic.
+Konn providers are a way to modularize repetitive setup/setdown logic.
 
 Create them using the provider builder API.
 
-Idiomatic Kont providers do two things:
+Idiomatic Konn providers do two things:
 
 1. Are wrapped in constructors as usually a provider will have options that can be configured, but even when not, to keep things consistent, it is best practice to do so.
 
 2. Are named. This runtime information improves error messages and log output.
 
-> For static typing reasons provider definitions must end with `.done()` which return apparently a plain function. This is a static "lie" to work around [TypeScript variance control limitatons](https://github.com/microsoft/TypeScript/issues/10717). In actuality, at runtime, something else is being returned and in fact `.done()` is basically a no-op function. Its a small price to pay for the type safety you get with Kont.
+> For static typing reasons provider definitions must end with `.done()` which return apparently a plain function. This is a static "lie" to work around [TypeScript variance control limitatons](https://github.com/microsoft/TypeScript/issues/10717). In actuality, at runtime, something else is being returned and in fact `.done()` is basically a no-op function. Its a small price to pay for the type safety you get with Konn.
 
 ```ts
 import { provider } from 'konn'
@@ -345,7 +345,7 @@ Providers do not control if they will run before all tests, or before each test.
 konn().useBeforeAll(someProvider()).useBeforeEach(someOtherProvider()).done()
 ```
 
-Providers can statically declare what their _upstream context requirements_ are and Kont context builder API ensures that consumers have to honour it or else get a static type error.
+Providers can statically declare what their _upstream context requirements_ are and Konn context builder API ensures that consumers have to honour it or else get a static type error.
 
 ```ts
 type Needs = {
@@ -364,7 +364,7 @@ konn()
   .done()
 ```
 
-Kont's typings are smart enough to correctly handle lifecycle hook order, so this as an error for example:
+Konn's typings are smart enough to correctly handle lifecycle hook order, so this as an error for example:
 
 ```ts
 // Error! Foo provider is in an before-all-hook which cannot see the context from before-each hooks
@@ -376,7 +376,7 @@ konn()
 
 ### Standard Providers
 
-Kont ships with standard providers for basic things like managing a temp directory or using a Playwright browser.
+Konn ships with standard providers for basic things like managing a temp directory or using a Playwright browser.
 
 For in-depth usage details refer to each one's JSDoc.
 
