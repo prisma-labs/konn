@@ -30,7 +30,7 @@ export type Setdown<C1 extends ContextBase = ContextBase> = (
   utils: ProviderUtils
 ) => MaybePromise<void>
 
-export type ContextBase = Record<string, unknown>
+export type ContextBase = object
 
 export type MergeC<C1 extends ContextBase, C2 extends ContextBase> = C1 & C2
 
